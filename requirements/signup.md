@@ -4,8 +4,8 @@
 
 1. ✅ Retorna erro **400** se o **name** não for fornecido pelo client
 2. ✅ Valida o dado obrigatório **name**
-3.  Retorna erro **400** se o **email** não for fornecido pelo client
-4.  Valida o dado obrigatório **email**
+3. ✅ Retorna erro **400** se o **email** não for fornecido pelo client
+4. ✅ Valida o dado obrigatório **email**
 5.  Retorna erro **400** se o **password** não for fornecido pelo client
 6.  Valida o dado obrigatório **password**
 7.  Retorna erro **400** se o **passwordConfirmation** não for fornecido pelo client
