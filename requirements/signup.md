@@ -6,8 +6,8 @@
 2. ✅ Valida o dado obrigatório **name**
 3. ✅ Retorna erro **400** se o **email** não for fornecido pelo client
 4. ✅ Valida o dado obrigatório **email**
-5.  Retorna erro **400** se o **password** não for fornecido pelo client
-6.  Valida o dado obrigatório **password**
+5. ✅ Retorna erro **400** se o **password** não for fornecido pelo client
+6. ✅ Valida o dado obrigatório **password**
 7.  Retorna erro **400** se o **passwordConfirmation** não for fornecido pelo client
 8.  Valida o dado obrigatório **passwordConfirmation**
 9.  Retorna erro **400** se o campo email for um e-mail inválido
