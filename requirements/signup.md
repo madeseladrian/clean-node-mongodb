@@ -12,6 +12,7 @@
 8. ✅ Valida o dado obrigatório **passwordConfirmation**
 9. ✅ Retorna erro **400** se o campo email for um e-mail inválido
 10.✅ Valida que o campo **email** é um e-mail válido
+11.✅ Retorna erro **500** se o **EmailValidator** falhar
 11. Recebe uma requisição do tipo **POST** na rota **/api/signup**
 12. **Valida** se já existe um usuário com o email fornecido
 13. Gera uma senha **criptografada** (essa senha não pode ser descriptografada)
