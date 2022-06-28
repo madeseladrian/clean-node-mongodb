@@ -1,5 +1,6 @@
-# Email Validator Adapter
+# Validador de Email
 
-1. ✅ Retorna erro se o **EmailValidator** returns false
-2. ✅ Retorna erro se o **EmailValidator** falhar
-3. ✅ Chama o **EmailValidator** com o email correto
+> ## EmailValidationAdapter
+1. ✅ Retorna **false** se o validador retornar false
+2. ✅ Retorna **true** se o validador retornar true
+3. ✅ Chama o **validador** com o email correto

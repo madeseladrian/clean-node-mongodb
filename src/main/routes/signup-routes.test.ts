@@ -1,6 +1,7 @@
 import request from 'supertest'
+
+import { MongoHelper } from '../../infra/db/mongodb/helpers'
 import app from '../config/app'
-import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper'
 
 describe('SignUp Routes', () => {
   beforeAll(async () => {
@@ -12,7 +13,8 @@ describe('SignUp Routes', () => {
   })
 
   beforeEach(async () => {
-    await MongoHelper.getCollection('accounts').deleteMany({})
+    const accountCollection = MongoHelper.getCollection('accounts')
+    await accountCollection.deleteMany({})
   })
 
   test('1 - Should return an account on success', async () => {
@@ -22,7 +24,7 @@ describe('SignUp Routes', () => {
         name: 'Mades',
         email: 'mades@gmail.com',
         password: '123456',
-        confirmPassword: '123456'
+        passwordConfirmation: '123456'
       })
       .expect(200)
   })
