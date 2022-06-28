@@ -7,7 +7,7 @@ import { LogControllerDecorator } from './log-controller-decorator'
 const makeFakeRequest = (): HttpRequest => ({
   body: {
     name: 'any_name',
-    email: 'any_email@mail.com',
+    email: 'any_email@example.com',
     password: 'any_password',
     passwordConfirmation: 'any_password'
   }
@@ -16,7 +16,7 @@ const makeFakeRequest = (): HttpRequest => ({
 const makeFakeAccount = (): AccountModel => ({
   id: 'valid_id',
   name: 'valid_name',
-  email: 'valid_email@mail.com',
+  email: 'valid_email@example.com',
   password: 'valid_password'
 })
 

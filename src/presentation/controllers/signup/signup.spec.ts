@@ -9,14 +9,14 @@ import { SignUpController } from './signup'
 const makeFakeAccount = (): AccountModel => ({
   id: 'valid_id',
   name: 'valid_name',
-  email: 'valid_email@mail.com',
+  email: 'valid_email@example.com',
   password: 'valid_password'
 })
 
 const makeFakeRequest = (): HttpRequest => ({
   body: {
     name: 'any_name',
-    email: 'any_email@mail.com',
+    email: 'any_email@example.com',
     password: 'any_password',
     passwordConfirmation: 'any_password'
   }
@@ -64,7 +64,7 @@ describe('SignUp Controller', () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
-        email: 'any_email@mail.com',
+        email: 'any_email@example.com',
         password: 'any_password',
         passwordConfirmation: 'any_password'
       }
@@ -91,7 +91,7 @@ describe('SignUp Controller', () => {
     const httpRequest = {
       body: {
         name: 'any_name',
-        email: 'any_email@mail.com',
+        email: 'any_email@example.com',
         passwordConfirmation: 'any_password'
       }
     }
@@ -104,7 +104,7 @@ describe('SignUp Controller', () => {
     const httpRequest = {
       body: {
         name: 'any_name',
-        email: 'any_email@mail.com',
+        email: 'any_email@example.com',
         password: 'any_password'
       }
     }
@@ -117,7 +117,7 @@ describe('SignUp Controller', () => {
     const httpRequest = {
       body: {
         name: 'any_name',
-        email: 'any_email@mail.com',
+        email: 'any_email@example.com',
         password: 'any_password',
         passwordConfirmation: 'invalid_password'
       }
@@ -137,7 +137,7 @@ describe('SignUp Controller', () => {
     const { emailValidatorStub, sut } = makeSut()
     const isValidSpy = jest.spyOn(emailValidatorStub, 'isValid')
     await sut.handle(makeFakeRequest())
-    expect(isValidSpy).toHaveBeenLastCalledWith('any_email@mail.com')
+    expect(isValidSpy).toHaveBeenLastCalledWith('any_email@example.com')
   })
 
   test('12 - Should return 500 if EmailValidator throws', async () => {
@@ -155,7 +155,7 @@ describe('SignUp Controller', () => {
     await sut.handle(makeFakeRequest())
     expect(addSpy).toHaveBeenCalledWith({
       name: 'any_name',
-      email: 'any_email@mail.com',
+      email: 'any_email@example.com',
       password: 'any_password'
     })
   })
