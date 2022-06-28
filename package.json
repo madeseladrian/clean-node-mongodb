@@ -7,13 +7,16 @@
   "author": "",
   "license": "ISC",
   "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
     "start": "sucrase-node src/main/server.ts",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
     "test:staged": "npm test -- --findRelatedTests",
-    "test:ci": "npm test -- --coverage"
+    "test:ci": "npm test -- --coverage",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "^1.1.3",
