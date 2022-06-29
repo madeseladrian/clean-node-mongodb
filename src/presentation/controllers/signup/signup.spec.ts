@@ -3,6 +3,7 @@ import { AddAccount, AddAccountModel } from '../../../domain/usecases'
 
 import { InvalidParamError, MissingParamError, ServerError } from '../../errors'
 import { badRequest, serverError, success } from '../../helpers'
+import { Validation } from '../../helpers/validators'
 import { EmailValidator, HttpRequest } from '../../protocols'
 import { SignUpController } from './signup'
 
@@ -22,16 +23,6 @@ const makeFakeRequest = (): HttpRequest => ({
   }
 })
 
-const makeEmailValidator = (): EmailValidator => {
-  class EmailValidatorStub implements EmailValidator {
-    isValid (email: string): boolean {
-      return true
-    }
-  }
-
-  return new EmailValidatorStub()
-}
-
 const makeAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
     async add (account: AddAccountModel): Promise<AccountModel> {
@@ -42,20 +33,45 @@ const makeAddAccount = (): AddAccount => {
   return new AddAccountStub()
 }
 
+const makeEmailValidator = (): EmailValidator => {
+  class EmailValidatorStub implements EmailValidator {
+    isValid (email: string): boolean {
+      return true
+    }
+  }
+
+  return new EmailValidatorStub()
+}
+
+const makeValidation = (): Validation => {
+  class ValidationStub implements Validation {
+    validate (input: any): Error {
+      return null
+    }
+  }
+
+  return new ValidationStub()
+}
+
 interface SutTypes {
   addAccountStub: AddAccount
   emailValidatorStub: EmailValidator
   sut: SignUpController
+  validationStub: Validation
 }
 
 const makeSut = (): SutTypes => {
-  const emailValidatorStub = makeEmailValidator()
   const addAccountStub = makeAddAccount()
-  const sut = new SignUpController(addAccountStub, emailValidatorStub)
+  const emailValidatorStub = makeEmailValidator()
+  const validationStub = makeValidation()
+  const sut = new SignUpController(
+    addAccountStub, emailValidatorStub, validationStub
+  )
   return {
     addAccountStub,
     emailValidatorStub,
-    sut
+    sut,
+    validationStub
   }
 }
 
@@ -173,5 +189,13 @@ describe('SignUp Controller', () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(success(makeFakeAccount()))
+  })
+
+  test('16 - Should call Validation with correct value', async () => {
+    const { sut, validationStub } = makeSut()
+    const validateSpy = jest.spyOn(validationStub, 'validate')
+    const httpRequest = makeFakeRequest()
+    await sut.handle(httpRequest)
+    expect(validateSpy).toHaveBeenCalledWith(httpRequest.body)
   })
 })
