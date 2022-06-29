@@ -180,7 +180,7 @@ module.exports = {
   // A map from regular expressions to paths to transformers
   transform: {
     '.+\\.ts?$': 'ts-jest'
-  }
+  },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [
@@ -195,7 +195,7 @@ module.exports = {
   // verbose: undefined,
 
   // An array of regexp patterns that are matched against all source file paths before re-running tests in watch mode
-  // watchPathIgnorePatterns: [],
+  watchPathIgnorePatterns: ['globalConfig']
 
   // Whether to use watchman for file crawling
   // watchman: true,
