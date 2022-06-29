@@ -1,9 +1,8 @@
 import { Authentication } from '../../../domain/usecases'
 import { MissingParamError } from '../../errors'
 import { badRequest, serverError, success, unauthorized } from '../../helpers'
-import { HttpRequest } from '../../protocols'
+import { HttpRequest, Validation } from '../../protocols'
 import { LoginController } from '.'
-import { Validation } from '../../helpers/validators'
 
 const makeFakeRequest = (): HttpRequest => ({
   body: {

@@ -1,7 +1,6 @@
 import { Authentication } from '../../../domain/usecases'
 import { badRequest, serverError, success, unauthorized } from '../../helpers'
-import { Validation } from '../../helpers/validators'
-import { Controller, HttpRequest, HttpResponse } from '../../protocols'
+import { Controller, HttpRequest, HttpResponse, Validation } from '../../protocols'
 
 export class LoginController implements Controller {
   private readonly authentication: Authentication

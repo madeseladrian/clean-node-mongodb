@@ -2,8 +2,7 @@ import { AccountModel } from '../../../domain/models'
 import { AddAccount, AddAccountModel } from '../../../domain/usecases'
 import { MissingParamError, ServerError } from '../../errors'
 import { badRequest, serverError, success } from '../../helpers'
-import { Validation } from '../../helpers/validators'
-import { HttpRequest } from '../../protocols'
+import { HttpRequest, Validation } from '../../protocols'
 import { SignUpController } from '.'
 
 const makeFakeAccount = (): AccountModel => ({
