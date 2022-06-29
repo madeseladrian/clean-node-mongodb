@@ -1,7 +1,7 @@
 import { AccountModel } from '../../../domain/models'
 import { AddAccount, AddAccountModel } from '../../../domain/usecases'
 import { MissingParamError, ServerError } from '../../errors'
-import { badRequest, serverError, success } from '../../helpers'
+import { badRequest, serverError, success } from '../../helpers/http'
 import { HttpRequest, Validation } from '../../protocols'
 import { SignUpController } from '.'
 
