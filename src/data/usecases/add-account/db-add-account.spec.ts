@@ -1,6 +1,7 @@
 import { AccountModel } from '../../../domain/models'
 import { AddAccountModel } from '../../../domain/usecases'
-import { AddAccountRepository, Encrypter } from '../../protocols'
+import { Encrypter } from '../../protocols/cryptography'
+import { AddAccountRepository } from '../../protocols/db'
 import { DbAddAccount } from '.'
 
 const makeEncrypter = (): Encrypter => {
