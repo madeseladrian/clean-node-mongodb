@@ -4,7 +4,7 @@ import {
   AddAccountRepository,
   LoadAccountByEmailRepository,
   UpdateAccessTokenRepository
-} from '../../../../data/protocols/db'
+} from '../../../../data/protocols/db/account'
 import { MongoHelper } from '../helpers'
 
 export class AccountMongoRepository implements AddAccountRepository, LoadAccountByEmailRepository, UpdateAccessTokenRepository {

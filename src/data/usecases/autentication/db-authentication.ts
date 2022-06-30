@@ -3,7 +3,7 @@ import { HashComparer, Encrypter } from '../../protocols/cryptography'
 import {
   LoadAccountByEmailRepository,
   UpdateAccessTokenRepository
-} from '../../protocols/db'
+} from '../../protocols/db/account'
 
 export class DbAuthentication implements Authentication {
   private readonly hashComparer: HashComparer

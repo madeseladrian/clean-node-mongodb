@@ -1,2 +1,2 @@
 export * from '.'
-export * from './signup-validation'
+export * from './signup-validation-factory'
