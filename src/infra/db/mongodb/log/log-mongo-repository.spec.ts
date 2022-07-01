@@ -1,5 +1,4 @@
 import { Collection } from 'mongodb'
-
 import { MongoHelper } from '../helpers'
 import { LogMongoRepository } from '.'
 
