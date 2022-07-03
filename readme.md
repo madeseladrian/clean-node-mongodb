@@ -1,5 +1,5 @@
 
-# **Clean Node API**
+# **Clean Node com MongoDB**
 
 ## [**Link para o curso completo**](https://www.udemy.com/course/tdd-com-mango/?referralCode=B53CE5CA2B9AFA5A6FA1)
 
@@ -12,12 +12,12 @@ O objetivo do treinamento é mostrar como criar uma API com uma arquitetura bem 
 
 > ## APIs construídas no treinamento
 
-1. [Cadastro](./requirements/signup.md)
-2. [Login](./requirements/login.md)
-3. [Criar enquete](./requirements/add-survey.md)
-4. [Listar enquetes](./requirements/load-surveys.md)
-5. [Responder enquete](./requirements/save-survey-result.md)
-6. [Resultado da enquete](./requirements/load-survey-result.md)
+1. [Cadastro](./requirements/presentation/signup.md)
+2. [Login](./requirements/presentation/login.md)
+3. [Criar enquete](./requirements/presentation/add-survey.md)
+4. [Listar enquetes](./requirements/presentation/load-surveys.md)
+5. [Responder enquete](./requirements/presentation/save-survey-result.md)
+6. [Resultado da enquete](./requirements/presentation/load-survey-result.md)
 
 > ## Princípios
 
