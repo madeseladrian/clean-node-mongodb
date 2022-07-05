@@ -1,10 +1,11 @@
-import { AddAccount } from '../../../domain/usecases'
-import { badRequest, serverError, success } from '../../helpers/http'
+import { AddAccount, Authentication } from '../../../domain/usecases'
+import { badRequest, serverError, ok } from '../../helpers/http'
 import { Controller, HttpRequest, HttpResponse, Validation } from '../../protocols'
 
 export class SignUpController implements Controller {
   constructor (
     private readonly addAccount: AddAccount,
+    private readonly authentication: Authentication,
     private readonly validation: Validation
   ) {}
 
@@ -16,7 +17,8 @@ export class SignUpController implements Controller {
       }
       const { name, email, password } = httpRequest.body
       const account = await this.addAccount.add({ name, email, password })
-      return success(account)
+      await this.authentication.auth({ email, password })
+      return ok(account)
     } catch (error) {
       return serverError(error)
     }
