@@ -22,7 +22,7 @@ describe('Log Mongo Repository', () => {
     await errorCollection.deleteMany({})
   })
 
-  test('1 - Should create an error log on success', async () => {
+  test('1 - Should create an error log on ok', async () => {
     const sut = makeSut()
     await sut.logError('any_error')
     const count = await errorCollection.countDocuments()

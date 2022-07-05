@@ -23,7 +23,7 @@ describe('BCrypt Adapter', () => {
     expect(hashSpy).toHaveBeenCalledWith('any_value', salt)
   })
 
-  test('2 - Should return a valid hash on success', async () => {
+  test('2 - Should return a valid hash on ok', async () => {
     const sut = makeSut()
     const hash = await sut.hash('any_value')
     expect(hash).toBe('hash')

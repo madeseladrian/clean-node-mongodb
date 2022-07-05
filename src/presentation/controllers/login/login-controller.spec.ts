@@ -1,6 +1,6 @@
 import { Authentication, AuthenticationModel } from '../../../domain/usecases'
 import { MissingParamError } from '../../errors'
-import { badRequest, serverError, success, unauthorized } from '../../helpers/http'
+import { badRequest, serverError, ok, unauthorized } from '../../helpers/http'
 import { HttpRequest, Validation } from '../../protocols'
 import { LoginController } from '.'
 
@@ -22,8 +22,8 @@ const makeAuthentication = (): Authentication => {
 
 const makeValidation = (): Validation => {
   class ValidationStub implements Validation {
-    validate (input: any): Error {
-      return null
+    validate(input: any): Error {
+      return null!
     }
   }
 
@@ -61,7 +61,7 @@ describe('Login Controller', () => {
   test('2 - Should return 401 if invalid credentials are provided', async () => {
     const { sut, authenticationStub } = makeSut()
     jest.spyOn(authenticationStub, 'auth').mockReturnValueOnce(
-      new Promise(resolve => resolve(null))
+      new Promise(resolve => resolve(null!))
     )
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(unauthorized())
@@ -79,7 +79,7 @@ describe('Login Controller', () => {
   test('4 - Should return 200 if credentials are provided', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(makeFakeRequest())
-    expect(httpResponse).toEqual(success({
+    expect(httpResponse).toEqual(ok({
       accessToken: 'any_token'
     }))
   })
