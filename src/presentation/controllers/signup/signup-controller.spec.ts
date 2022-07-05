@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { AccountModel } from '../../../domain/models'
 import { AddAccount, AddAccountModel, Authentication, AuthenticationModel } from '../../../domain/usecases'
 import { EmailInUseError, MissingParamError, ServerError } from '../../errors'
@@ -105,7 +106,7 @@ describe('SignUp Controller', () => {
   test('4 - Should return 200 if valid data is provided', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(makeFakeRequest())
-    expect(httpResponse).toEqual(ok({ accessToken: 'any_token'}))
+    expect(httpResponse).toEqual(ok({ accessToken: 'any_token' }))
   })
 
   test('5 - Should call Validation with correct value', async () => {
@@ -131,7 +132,7 @@ describe('SignUp Controller', () => {
       email: 'any_email@example.com',
       password: 'any_password'
     })
-  }) 
+  })
 
   test('8 - Should return 500 if Authentication throws', async () => {
     const { sut, authenticationStub } = makeSut()
