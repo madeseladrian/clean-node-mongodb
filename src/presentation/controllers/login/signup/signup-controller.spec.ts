@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { AccountModel } from '../../../domain/models'
-import { AddAccount, AddAccountModel, Authentication, AuthenticationModel } from '../../../domain/usecases'
-import { EmailInUseError, MissingParamError, ServerError } from '../../errors'
-import { badRequest, forbidden, ok, serverError } from '../../helpers/http'
-import { HttpRequest, Validation } from '../../protocols'
+import { AccountModel } from '../../../../domain/models'
+import { AddAccount, AddAccountModel, Authentication, AuthenticationModel } from '../../../../domain/usecases'
+import { EmailInUseError, MissingParamError, ServerError } from '../../../errors'
+import { badRequest, forbidden, ok, serverError } from '../../../helpers/http'
+import { HttpRequest, Validation } from '../../../protocols'
 import { SignUpController } from '.'
 
 const makeFakeAccount = (): AccountModel => ({

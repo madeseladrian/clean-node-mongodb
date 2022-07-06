@@ -1,7 +1,8 @@
-import { Authentication, AuthenticationModel } from '../../../domain/usecases'
-import { MissingParamError } from '../../errors'
-import { badRequest, serverError, ok, unauthorized } from '../../helpers/http'
-import { HttpRequest, Validation } from '../../protocols'
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { Authentication, AuthenticationModel } from '../../../../domain/usecases'
+import { MissingParamError } from '../../../errors'
+import { badRequest, serverError, ok, unauthorized } from '../../../helpers/http'
+import { HttpRequest, Validation } from '../../../protocols'
 import { LoginController } from '.'
 
 const makeFakeRequest = (): HttpRequest => ({
@@ -22,7 +23,7 @@ const makeAuthentication = (): Authentication => {
 
 const makeValidation = (): Validation => {
   class ValidationStub implements Validation {
-    validate(input: any): Error {
+    validate (input: any): Error {
       return null!
     }
   }
