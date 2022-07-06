@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { AccountModel } from '../../../domain/models'
 import { AuthenticationModel } from '../../../domain/usecases'
 import { HashComparer, Encrypter } from '../../protocols/cryptography'
@@ -99,7 +100,7 @@ describe('DbAuthentication UseCase', () => {
 
   test('3 - Should return null if LoadAccountByEmailRepository returns null', async () => {
     const { loadAccountByEmailRepositoryStub, sut } = makeSut()
-    jest.spyOn(loadAccountByEmailRepositoryStub, 'loadByEmail').mockReturnValueOnce(null)
+    jest.spyOn(loadAccountByEmailRepositoryStub, 'loadByEmail').mockReturnValueOnce(null!)
     const accessToken = await sut.auth(makeFakeAuthentication())
     expect(accessToken).toBeNull()
   })
