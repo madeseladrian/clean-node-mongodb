@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Authentication, AuthenticationModel } from '../../../../domain/usecases'
+import { AuthenticationModel } from '../../../../domain/models'
+import { Authentication } from '../../../../domain/usecases'
 import { MissingParamError } from '../../../errors'
 import { badRequest, serverError, ok, unauthorized } from '../../../helpers/http'
 import { HttpRequest, Validation } from '../../../protocols'

@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { AccountModel } from '../../../domain/models'
-import { AuthenticationModel } from '../../../domain/usecases'
+import { AccountModel, AuthenticationModel } from '../../../domain/models'
 import { HashComparer, Encrypter } from '../../protocols/cryptography'
 import { LoadAccountByEmailRepository, UpdateAccessTokenRepository } from '../../protocols/db/account'
 import { DbAuthentication } from '.'

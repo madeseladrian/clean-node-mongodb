@@ -1,5 +1,4 @@
-import { AccountModel } from '../../../../domain/models'
-import { AddAccountModel } from '../../../../domain/usecases'
+import { AccountModel, AddAccountModel } from '../../../../domain/models'
 import {
   AddAccountRepository,
   LoadAccountByEmailRepository,
