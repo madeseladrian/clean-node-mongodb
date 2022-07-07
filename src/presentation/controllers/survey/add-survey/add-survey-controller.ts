@@ -1,8 +1,10 @@
+import { AddSurvey } from '../../../../domain/usecases'
 import { badRequest } from '../../../helpers/http'
 import { Controller, HttpRequest, HttpResponse, Validation } from '../../../protocols'
 
 export class AddSurveyController implements Controller {
   constructor (
+    private readonly addSurvey: AddSurvey,
     private readonly validation: Validation
   ) { }
 
@@ -11,6 +13,11 @@ export class AddSurveyController implements Controller {
     if (error) {
       return badRequest(error)
     }
+    const { question, answers } = httpRequest.body
+    await this.addSurvey.add({
+      question,
+      answers
+    })
     return new Promise(resolve => resolve(null))
   }
 }
