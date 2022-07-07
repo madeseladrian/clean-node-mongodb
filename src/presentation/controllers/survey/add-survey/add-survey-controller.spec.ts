@@ -1,7 +1,7 @@
 import { AddSurveyModel } from '../../../../domain/models'
 import { AddSurvey } from '../../../../domain/usecases'
 import { HttpRequest, Validation } from '../../../protocols'
-import { badRequest, serverError } from '../../../helpers/http'
+import { badRequest, noContent, serverError } from '../../../helpers/http'
 import { AddSurveyController } from '.'
 
 const makeFakeRequest = (): HttpRequest => ({
@@ -80,5 +80,11 @@ describe('AddSurvey Controller', () => {
     )
     const htttpResponse = await sut.handle(makeFakeRequest())
     expect(htttpResponse).toEqual(serverError(new Error()))
+  })
+
+  test('5 - Should return 204 on success', async () => {
+    const { sut } = makeSut()
+    const htttpResponse = await sut.handle(makeFakeRequest())
+    expect(htttpResponse).toEqual(noContent())
   })
 })
