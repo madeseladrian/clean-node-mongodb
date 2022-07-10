@@ -16,10 +16,12 @@ const makeSut = (): SutTypes => {
   }
 }
 
+let role: string
 let token: string
 
 describe('DbLoadAccountByToken Usecase', () => {
   beforeEach(() => {
+    role = faker.random.word()
     token = faker.datatype.uuid()
   })
 
@@ -27,5 +29,12 @@ describe('DbLoadAccountByToken Usecase', () => {
     const { decrypterSpy, sut } = makeSut()
     await sut.load(token)
     expect(decrypterSpy.ciphertext).toBe(token)
+  })
+
+  test('2 - Should return null if Decrypter returns null', async () => {
+    const { sut, decrypterSpy } = makeSut()
+    decrypterSpy.plaintext = null
+    const account = await sut.load(token, role)
+    expect(account).toBeNull()
   })
 })
