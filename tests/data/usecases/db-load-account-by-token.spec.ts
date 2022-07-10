@@ -1,17 +1,20 @@
 import { DbLoadAccountByToken } from '@/data/usecases'
-import { DecrypterSpy } from '@/tests/data/mocks'
+import { DecrypterSpy, LoadAccountByTokenRepositorySpy } from '@/tests/data/mocks'
 import faker from 'faker'
 
 type SutTypes = {
   decrypterSpy: DecrypterSpy
+  loadAccountByTokenRepositorySpy: LoadAccountByTokenRepositorySpy
   sut: DbLoadAccountByToken
 }
 
 const makeSut = (): SutTypes => {
   const decrypterSpy = new DecrypterSpy()
-  const sut = new DbLoadAccountByToken(decrypterSpy)
+  const loadAccountByTokenRepositorySpy = new LoadAccountByTokenRepositorySpy()
+  const sut = new DbLoadAccountByToken(decrypterSpy, loadAccountByTokenRepositorySpy)
   return {
     decrypterSpy,
+    loadAccountByTokenRepositorySpy,
     sut
   }
 }
@@ -32,9 +35,16 @@ describe('DbLoadAccountByToken Usecase', () => {
   })
 
   test('2 - Should return null if Decrypter returns null', async () => {
-    const { sut, decrypterSpy } = makeSut()
+    const { decrypterSpy, sut } = makeSut()
     decrypterSpy.plaintext = null
     const account = await sut.load(token, role)
     expect(account).toBeNull()
+  })
+
+  test('3 - Should call LoadAccountByTokenRepository with correct values', async () => {
+    const { loadAccountByTokenRepositorySpy, sut } = makeSut()
+    await sut.load(token, role)
+    expect(loadAccountByTokenRepositorySpy.token).toBe(token)
+    expect(loadAccountByTokenRepositorySpy.role).toBe(role)
   })
 })
