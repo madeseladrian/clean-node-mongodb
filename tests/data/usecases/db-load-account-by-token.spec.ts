@@ -1,4 +1,5 @@
 import { DbLoadAccountByToken } from '@/data/usecases'
+import { throwError } from '@/tests/domain/mocks'
 import { DecrypterSpy, LoadAccountByTokenRepositorySpy } from '@/tests/data/mocks'
 import faker from 'faker'
 
@@ -59,5 +60,12 @@ describe('DbLoadAccountByToken Usecase', () => {
     const { sut, loadAccountByTokenRepositorySpy } = makeSut()
     const account = await sut.load(token, role)
     expect(account).toEqual(loadAccountByTokenRepositorySpy.result)
+  })
+
+  test('6 - Should throw if Decrypter throws', async () => {
+    const { sut, decrypterSpy } = makeSut()
+    jest.spyOn(decrypterSpy, 'decrypt').mockImplementationOnce(throwError)
+    const account = await sut.load(token, role)
+    expect(account).toBeNull()
   })
 })
