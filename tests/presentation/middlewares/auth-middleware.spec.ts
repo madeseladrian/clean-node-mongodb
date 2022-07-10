@@ -1,14 +1,22 @@
 import { AccessDeniedError } from '@/presentation/errors'
 import { forbidden } from '@/presentation/helpers'
 import { AuthMiddleware } from '@/presentation/middlewares'
+import { LoadAccountByTokenSpy } from '@/tests/presentation/mocks'
+
+const mockRequest = (): AuthMiddleware.Request => ({
+  accessToken: 'any_token'
+})
 
 type SutTypes = {
+  loadAccountByTokenSpy: LoadAccountByTokenSpy
   sut: AuthMiddleware
 }
 
 const makeSut = (role?: string): SutTypes => {
-  const sut = new AuthMiddleware()
+  const loadAccountByTokenSpy = new LoadAccountByTokenSpy()
+  const sut = new AuthMiddleware(loadAccountByTokenSpy)
   return {
+    loadAccountByTokenSpy,
     sut
   }
 }
@@ -18,5 +26,13 @@ describe('Auth Middleware', () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle({})
     expect(httpResponse).toEqual(forbidden(new AccessDeniedError()))
+  })
+
+  test('2 - Should call LoadAccountByToken with correct accessToken', async () => {
+    const role = 'any_role'
+    const { sut, loadAccountByTokenSpy } = makeSut(role)
+    const httpRequest = mockRequest()
+    await sut.handle(httpRequest)
+    expect(loadAccountByTokenSpy.accessToken).toBe(httpRequest.accessToken)
   })
 })
