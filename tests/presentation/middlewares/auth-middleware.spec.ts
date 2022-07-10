@@ -1,6 +1,7 @@
 import { AccessDeniedError } from '@/presentation/errors'
-import { forbidden, ok } from '@/presentation/helpers'
+import { forbidden, ok, serverError } from '@/presentation/helpers'
 import { AuthMiddleware } from '@/presentation/middlewares'
+import { throwError } from '@/tests/domain/mocks'
 import { LoadAccountByTokenSpy } from '@/tests/presentation/mocks'
 
 const mockRequest = (): AuthMiddleware.Request => ({
@@ -14,7 +15,7 @@ type SutTypes = {
 
 const makeSut = (role?: string): SutTypes => {
   const loadAccountByTokenSpy = new LoadAccountByTokenSpy()
-  const sut = new AuthMiddleware(loadAccountByTokenSpy)
+  const sut = new AuthMiddleware(loadAccountByTokenSpy, role)
   return {
     loadAccountByTokenSpy,
     sut
@@ -34,6 +35,7 @@ describe('Auth Middleware', () => {
     const httpRequest = mockRequest()
     await sut.handle(httpRequest)
     expect(loadAccountByTokenSpy.accessToken).toBe(httpRequest.accessToken)
+    expect(loadAccountByTokenSpy.role).toBe(role)
   })
 
   test('3 - Should return 403 if LoadAccountByToken returns null', async () => {
@@ -49,5 +51,12 @@ describe('Auth Middleware', () => {
     expect(httpResponse).toEqual(ok({
       accountId: loadAccountByTokenSpy.result.id
     }))
+  })
+
+  test('5 - Should return 500 if LoadAccountByToken throws', async () => {
+    const { sut, loadAccountByTokenSpy } = makeSut()
+    jest.spyOn(loadAccountByTokenSpy, 'load').mockImplementationOnce(throwError)
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(serverError(new Error()))
   })
 })
