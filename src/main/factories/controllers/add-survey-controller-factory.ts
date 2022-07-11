@@ -6,7 +6,7 @@ import {
   makeLogControllerDecorator
 } from '@/main/factories'
 
-export const makeSurveyController = (): Controller => {
+export const makeAddSurveyController = (): Controller => {
   const controller = new AddSurveyController(makeDbAddSurvey(), makeAddSurveyValidation())
   return makeLogControllerDecorator(controller)
 }
