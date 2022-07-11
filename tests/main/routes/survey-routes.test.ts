@@ -23,7 +23,7 @@ describe('Surveys Routes', () => {
   })
 
   describe('POST /surveys', () => {
-    test('1 - Should return 204 on add survey success', async () => {
+    test('1 - Should return 403 on add survey without accessToken', async () => {
       await request(app)
         .post('/api/surveys')
         .send({
@@ -35,7 +35,7 @@ describe('Surveys Routes', () => {
             answer: 'Answer 2'
           }]
         })
-        .expect(204)
+        .expect(403)
     })
   })
 })
