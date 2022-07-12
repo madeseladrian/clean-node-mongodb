@@ -63,5 +63,12 @@ describe('SurveyMongoRepository', () => {
       expect(surveys[1].question).toBe(addSurveyModels[1].question)
       expect(surveys[1].didAnswer).toBe(false)
     })
+
+    test('2 - Should load empty list', async () => {
+      const accountId = await mockAccountId()
+      const sut = makeSut()
+      const surveys = await sut.loadAll(accountId)
+      expect(surveys.length).toBe(0)
+    })
   })
 })
