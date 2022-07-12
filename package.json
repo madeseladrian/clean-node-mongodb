@@ -1,6 +1,6 @@
 {
   "name": "clean-node-mongodb",
-  "version": "1.4.0",
+  "version": "2.0.0",
   "description": "NodeJs Rest API and GraphQL using TDD, Clean Architecture, Typescript and Design Patterns",
   "author": "Mades Eladrian",
   "license": "ISC",
