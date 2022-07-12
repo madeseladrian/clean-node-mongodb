@@ -1,5 +1,5 @@
 import { LoadSurveysController } from '@/presentation/controllers'
-import { ok } from '@/presentation/helpers'
+import { noContent, ok } from '@/presentation/helpers'
 import { LoadSurveysSpy } from '@/tests/presentation/mocks'
 import MockDate from 'mockdate'
 import faker from 'faker'
@@ -40,5 +40,12 @@ describe('LoadSurveys Controller', () => {
     const { sut, loadSurveysSpy } = makeSut()
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(ok(loadSurveysSpy.result))
+  })
+
+  test('3 - Should return 204 if LoadSurveys returns empty', async () => {
+    const { sut, loadSurveysSpy } = makeSut()
+    loadSurveysSpy.result = []
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(noContent())
   })
 })
