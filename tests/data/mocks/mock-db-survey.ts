@@ -1,5 +1,6 @@
 import { AddSurvey } from '@/domain/usecases'
-import { AddSurveyRepository } from '@/data/protocols'
+import { AddSurveyRepository, LoadSurveysRepository } from '@/data/protocols'
+import { mockSurveyModels } from '@/tests/domain/mocks'
 import faker from 'faker'
 
 export class AddSurveyRepositorySpy implements AddSurveyRepository {
@@ -7,6 +8,16 @@ export class AddSurveyRepositorySpy implements AddSurveyRepository {
 
   async add (params: AddSurveyRepository.Params): Promise<void> {
     this.params = params
+  }
+}
+
+export class LoadSurveysRepositorySpy implements LoadSurveysRepository {
+  accountId: string
+  result = mockSurveyModels()
+
+  async loadAll (accountId: string): Promise<LoadSurveysRepository.Result> {
+    this.accountId = accountId
+    return this.result
   }
 }
 
