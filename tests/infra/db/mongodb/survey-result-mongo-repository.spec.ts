@@ -57,5 +57,31 @@ describe('SurveyMongoRepository', () => {
       })
       expect(surveyResult).toBeTruthy()
     })
+
+    test('2 - Should update survey result if its not new', async () => {
+      const survey = await mockSurvey()
+      const accountId = await mockAccountId()
+      await surveyResultCollection.insertOne({
+        surveyId: new ObjectId(survey.id),
+        accountId: new ObjectId(accountId),
+        answer: survey.answers[0].answer,
+        date: new Date()
+      })
+      const sut = makeSut()
+      await sut.save({
+        surveyId: survey.id,
+        accountId,
+        answer: survey.answers[1].answer,
+        date: new Date()
+      })
+      const surveyResult = await surveyResultCollection
+        .find({
+          surveyId: new ObjectId(survey.id),
+          accountId: new ObjectId(accountId)
+        })
+        .toArray()
+      expect(surveyResult).toBeTruthy()
+      expect(surveyResult.length).toBe(1)
+    })
   })
 })
