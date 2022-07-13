@@ -55,4 +55,10 @@ describe('SaveSurveyResult Controller', () => {
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
   })
+
+  test('4 - Should return 403 if an invalid answer is provided', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(forbidden(new InvalidParamError('answer')))
+  })
 })
