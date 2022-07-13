@@ -1,6 +1,6 @@
 import { SaveSurveyResultController } from '@/presentation/controllers'
 import { InvalidParamError } from '@/presentation/errors'
-import { forbidden, serverError } from '@/presentation/helpers'
+import { forbidden, ok, serverError } from '@/presentation/helpers'
 import { throwError } from '@/tests/domain/mocks'
 import { LoadAnswersBySurveySpy, SaveSurveyResultSpy } from '@/tests/presentation/mocks'
 import faker from 'faker'
@@ -83,5 +83,12 @@ describe('SaveSurveyResult Controller', () => {
     const request = mockRequest(loadAnswersBySurveySpy.result[0])
     const httpResponse = await sut.handle(request)
     expect(httpResponse).toEqual(serverError(new Error()))
+  })
+
+  test('7 - Should return 200 on success', async () => {
+    const { sut, saveSurveyResultSpy, loadAnswersBySurveySpy } = makeSut()
+    const request = mockRequest(loadAnswersBySurveySpy.result[0])
+    const httpResponse = await sut.handle(request)
+    expect(httpResponse).toEqual(ok(saveSurveyResultSpy.result))
   })
 })
