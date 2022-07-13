@@ -1,11 +1,25 @@
-import { AddSurvey, LoadSurveys } from '@/domain/usecases'
+import { AddSurvey, LoadAnswersBySurvey, LoadSurveys } from '@/domain/usecases'
 import { mockSurveyModels } from '@/tests/domain/mocks'
+import faker from 'faker'
 
 export class AddSurveySpy implements AddSurvey {
   params: AddSurvey.Params
 
   async add (params: AddSurvey.Params): Promise<void> {
     this.params = params
+  }
+}
+
+export class LoadAnswersBySurveySpy implements LoadAnswersBySurvey {
+  id: string
+  result = [
+    faker.random.word(),
+    faker.random.word()
+  ]
+
+  async loadAnswers (id: string): Promise<LoadAnswersBySurvey.Result> {
+    this.id = id
+    return this.result
   }
 }
 
