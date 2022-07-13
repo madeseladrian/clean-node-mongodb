@@ -1,5 +1,5 @@
 import { Controller, HttpResponse } from '@/presentation/protocols'
-import { forbidden, serverError } from '@/presentation/helpers'
+import { forbidden, ok, serverError } from '@/presentation/helpers'
 import { InvalidParamError } from '@/presentation/errors'
 import { LoadAnswersBySurvey, SaveSurveyResult } from '@/domain/usecases'
 
@@ -18,11 +18,11 @@ export class SaveSurveyResultController implements Controller {
       } else if (!answers.includes(answer)) {
         return forbidden(new InvalidParamError('answer'))
       }
-      await this.saveSurveyResult.save({
+      const surveyResult = await this.saveSurveyResult.save({
         ...request,
         date: new Date()
       })
-      return null
+      return ok(surveyResult)
     } catch (error) {
       return serverError(error)
     }
