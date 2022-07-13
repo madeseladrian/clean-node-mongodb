@@ -1,22 +1,20 @@
 import { DbLoadSurveyResult } from '@/data/usecases'
-import { LoadSurveyResultRepositorySpy, LoadSurveyByIdRepositorySpy } from '@/tests/data/mocks'
+import { throwError } from '@/tests/domain/mocks'
+import { LoadSurveyResultRepositorySpy } from '@/tests/data/mocks'
 import faker from 'faker'
 import MockDate from 'mockdate'
 
 type SutTypes = {
   sut: DbLoadSurveyResult
   loadSurveyResultRepositorySpy: LoadSurveyResultRepositorySpy
-  loadSurveyByIdRepositorySpy: LoadSurveyByIdRepositorySpy
 }
 
 const makeSut = (): SutTypes => {
   const loadSurveyResultRepositorySpy = new LoadSurveyResultRepositorySpy()
-  const loadSurveyByIdRepositorySpy = new LoadSurveyByIdRepositorySpy()
-  const sut = new DbLoadSurveyResult(loadSurveyResultRepositorySpy, loadSurveyByIdRepositorySpy)
+  const sut = new DbLoadSurveyResult(loadSurveyResultRepositorySpy)
   return {
     sut,
-    loadSurveyResultRepositorySpy,
-    loadSurveyByIdRepositorySpy
+    loadSurveyResultRepositorySpy
   }
 }
 
@@ -42,5 +40,12 @@ describe('DbLoadSurveyResult UseCase', () => {
     await sut.load(surveyId, accountId)
     expect(loadSurveyResultRepositorySpy.surveyId).toBe(surveyId)
     expect(loadSurveyResultRepositorySpy.accountId).toBe(accountId)
+  })
+
+  test('2 - Should throw if LoadSurveyResultRepository throws', async () => {
+    const { sut, loadSurveyResultRepositorySpy } = makeSut()
+    jest.spyOn(loadSurveyResultRepositorySpy, 'loadBySurveyId').mockImplementationOnce(throwError)
+    const promise = sut.load(surveyId, accountId)
+    await expect(promise).rejects.toThrow()
   })
 })
