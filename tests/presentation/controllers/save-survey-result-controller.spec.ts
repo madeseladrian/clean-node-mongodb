@@ -2,7 +2,7 @@ import { SaveSurveyResultController } from '@/presentation/controllers'
 import { InvalidParamError } from '@/presentation/errors'
 import { forbidden, serverError } from '@/presentation/helpers'
 import { throwError } from '@/tests/domain/mocks'
-import { LoadAnswersBySurveySpy } from '@/tests/presentation/mocks'
+import { LoadAnswersBySurveySpy, SaveSurveyResultSpy } from '@/tests/presentation/mocks'
 import faker from 'faker'
 import MockDate from 'mockdate'
 
@@ -15,14 +15,17 @@ const mockRequest = (answer: string = null): SaveSurveyResultController.Request 
 type SutTypes = {
   sut: SaveSurveyResultController
   loadAnswersBySurveySpy: LoadAnswersBySurveySpy
+  saveSurveyResultSpy: SaveSurveyResultSpy
 }
 
 const makeSut = (): SutTypes => {
   const loadAnswersBySurveySpy = new LoadAnswersBySurveySpy()
-  const sut = new SaveSurveyResultController(loadAnswersBySurveySpy)
+  const saveSurveyResultSpy = new SaveSurveyResultSpy()
+  const sut = new SaveSurveyResultController(loadAnswersBySurveySpy, saveSurveyResultSpy)
   return {
-    sut,
-    loadAnswersBySurveySpy
+    loadAnswersBySurveySpy,
+    saveSurveyResultSpy,
+    sut
   }
 }
 
@@ -60,5 +63,17 @@ describe('SaveSurveyResult Controller', () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(forbidden(new InvalidParamError('answer')))
+  })
+
+  test('5 - Should call SaveSurveyResult with correct values', async () => {
+    const { sut, saveSurveyResultSpy, loadAnswersBySurveySpy } = makeSut()
+    const request = mockRequest(loadAnswersBySurveySpy.result[0])
+    await sut.handle(request)
+    expect(saveSurveyResultSpy.params).toEqual({
+      surveyId: request.surveyId,
+      accountId: request.accountId,
+      date: new Date(),
+      answer: request.answer
+    })
   })
 })
