@@ -2,6 +2,7 @@ import { AddSurvey } from '@/domain/usecases'
 import {
   AddSurveyRepository,
   LoadSurveyByIdRepository,
+  LoadAnswersBySurveyRepository,
   LoadSurveysRepository
 } from '@/data/protocols'
 import { mockSurveyModel, mockSurveyModels } from '@/tests/domain/mocks'
@@ -20,6 +21,19 @@ export class LoadSurveyByIdRepositorySpy implements LoadSurveyByIdRepository {
   result = mockSurveyModel()
 
   async loadById (id: string): Promise<LoadSurveyByIdRepository.Result> {
+    this.id = id
+    return this.result
+  }
+}
+
+export class LoadAnswersBySurveyRepositorySpy implements LoadAnswersBySurveyRepository {
+  id: string
+  result = [
+    faker.random.word(),
+    faker.random.word()
+  ]
+
+  async loadAnswers (id: string): Promise<LoadAnswersBySurveyRepository.Result> {
     this.id = id
     return this.result
   }
