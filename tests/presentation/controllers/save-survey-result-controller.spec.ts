@@ -1,6 +1,7 @@
 import { SaveSurveyResultController } from '@/presentation/controllers'
 import { InvalidParamError } from '@/presentation/errors'
-import { forbidden } from '@/presentation/helpers'
+import { forbidden, serverError } from '@/presentation/helpers'
+import { throwError } from '@/tests/domain/mocks'
 import { LoadAnswersBySurveySpy } from '@/tests/presentation/mocks'
 import faker from 'faker'
 import MockDate from 'mockdate'
@@ -46,5 +47,12 @@ describe('SaveSurveyResult Controller', () => {
     loadAnswersBySurveySpy.result = []
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(forbidden(new InvalidParamError('surveyId')))
+  })
+
+  test('3 - Should return 500 if LoadAnswersBySurvey throws', async () => {
+    const { sut, loadAnswersBySurveySpy } = makeSut()
+    jest.spyOn(loadAnswersBySurveySpy, 'loadAnswers').mockImplementationOnce(throwError)
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(serverError(new Error()))
   })
 })
