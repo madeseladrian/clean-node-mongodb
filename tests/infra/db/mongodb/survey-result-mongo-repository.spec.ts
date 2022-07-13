@@ -1,6 +1,7 @@
-import { SurveyModel } from '@/domain/models'
 import { SurveyResultMongoRepository, MongoHelper } from '@/infra/db'
+import { SurveyModel } from '@/domain/models'
 import { mockAddSurveyParams, mockAddAccountParams } from '@/tests/domain/mocks'
+
 import { Collection, ObjectId } from 'mongodb'
 
 let surveyCollection: Collection
@@ -41,7 +42,7 @@ describe('SurveyMongoRepository', () => {
   })
 
   describe('save()', () => {
-    test('1 - Should add a survey result if its new', async () => {
+    test('Should add a survey result if its new', async () => {
       const survey = await mockSurvey()
       const accountId = await mockAccountId()
       const sut = makeSut()
@@ -58,7 +59,7 @@ describe('SurveyMongoRepository', () => {
       expect(surveyResult).toBeTruthy()
     })
 
-    test('2 - Should update survey result if its not new', async () => {
+    test('Should update survey result if its not new', async () => {
       const survey = await mockSurvey()
       const accountId = await mockAccountId()
       await surveyResultCollection.insertOne({
@@ -86,7 +87,7 @@ describe('SurveyMongoRepository', () => {
   })
 
   describe('loadBySurveyId()', () => {
-    test('1 - Should load survey result', async () => {
+    test('Should load survey result', async () => {
       const survey = await mockSurvey()
       const accountId = await mockAccountId()
       const accountId2 = await mockAccountId()
@@ -114,7 +115,7 @@ describe('SurveyMongoRepository', () => {
       expect(surveyResult.answers.length).toBe(survey.answers.length)
     })
 
-    test('2 - Should load survey result 2', async () => {
+    test('Should load survey result 2', async () => {
       const survey = await mockSurvey()
       const accountId = await mockAccountId()
       const accountId2 = await mockAccountId()
@@ -148,7 +149,7 @@ describe('SurveyMongoRepository', () => {
       expect(surveyResult.answers.length).toBe(survey.answers.length)
     })
 
-    test('3 - Should load survey result 3', async () => {
+    test('Should load survey result 3', async () => {
       const survey = await mockSurvey()
       const accountId = await mockAccountId()
       const accountId2 = await mockAccountId()
@@ -177,7 +178,7 @@ describe('SurveyMongoRepository', () => {
       expect(surveyResult.answers.length).toBe(survey.answers.length)
     })
 
-    test('4 - Should return null if there is no survey result', async () => {
+    test('Should return null if there is no survey result', async () => {
       const survey = await mockSurvey()
       const accountId = await mockAccountId()
       const sut = makeSut()

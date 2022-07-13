@@ -1,7 +1,8 @@
-import { Encrypter } from '@/data/protocols'
+import { Encrypter, Decrypter } from '@/data/protocols'
+
 import jwt from 'jsonwebtoken'
 
-export class JwtAdapter implements Encrypter {
+export class JwtAdapter implements Encrypter, Decrypter {
   constructor (private readonly secret: string) {}
 
   async encrypt (plaintext: string): Promise<string> {

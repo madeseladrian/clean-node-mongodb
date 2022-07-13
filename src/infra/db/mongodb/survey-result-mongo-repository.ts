@@ -1,10 +1,11 @@
-import { SurveyResultModel } from '@/domain/models'
-import { SaveSurveyResultRepository, LoadSurveyResultRepository } from '@/data/protocols/db'
 import { MongoHelper, QueryBuilder } from '@/infra/db'
-import round from 'mongo-round'
-import { ObjectId } from 'mongodb'
+import { SaveSurveyResultRepository, LoadSurveyResultRepository } from '@/data/protocols/db'
 
-export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
+import { ObjectId } from 'mongodb'
+import round from 'mongo-round'
+import { SurveyResultModel } from '@/domain/models'
+
+export class SurveyResultMongoRepository implements SaveSurveyResultRepository, LoadSurveyResultRepository {
   async save (data: SaveSurveyResultRepository.Params): Promise<void> {
     const surveyResultCollection = MongoHelper.getCollection('surveyResults')
     await surveyResultCollection.findOneAndUpdate({

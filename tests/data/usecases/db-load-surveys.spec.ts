@@ -1,8 +1,9 @@
 import { DbLoadSurveys } from '@/data/usecases'
-import { throwError } from '@/tests/domain/mocks'
 import { LoadSurveysRepositorySpy } from '@/tests/data/mocks'
-import faker from 'faker'
+import { throwError } from '@/tests/domain/mocks'
+
 import MockDate from 'mockdate'
+import faker from 'faker'
 
 type SutTypes = {
   sut: DbLoadSurveys
@@ -27,20 +28,20 @@ describe('DbLoadSurveys', () => {
     MockDate.reset()
   })
 
-  test('1 - Should call LoadSurveysRepository', async () => {
+  test('Should call LoadSurveysRepository', async () => {
     const { sut, loadSurveysRepositorySpy } = makeSut()
     const accountId = faker.datatype.uuid()
     await sut.load(accountId)
     expect(loadSurveysRepositorySpy.accountId).toBe(accountId)
   })
 
-  test('2 - Should return a list of Surveys on success', async () => {
+  test('Should return a list of Surveys on success', async () => {
     const { sut, loadSurveysRepositorySpy } = makeSut()
     const surveys = await sut.load(faker.datatype.uuid())
     expect(surveys).toEqual(loadSurveysRepositorySpy.result)
   })
 
-  test('3 - Should throw if LoadSurveysRepository throws', async () => {
+  test('Should throw if LoadSurveysRepository throws', async () => {
     const { sut, loadSurveysRepositorySpy } = makeSut()
     jest.spyOn(loadSurveysRepositorySpy, 'loadAll').mockImplementationOnce(throwError)
     const promise = sut.load(faker.datatype.uuid())

@@ -1,17 +1,12 @@
+import { makeSignUpValidation } from '@/main/factories'
+import { ValidationComposite, RequiredFieldValidation, CompareFieldsValidation, EmailValidation } from '@/validation/validators'
 import { Validation } from '@/presentation/protocols'
 import { EmailValidatorAdapter } from '@/infra/validators'
-import {
-  CompareFieldsValidation,
-  EmailValidation,
-  RequiredFieldValidation,
-  ValidationComposite
-} from '@/validation/validators'
-import { makeSignUpValidation } from '@/main/factories'
 
 jest.mock('@/validation/validators/validation-composite')
 
 describe('SignUpValidation Factory', () => {
-  test('1 - Should call ValidationComposite with all validations', () => {
+  test('Should call ValidationComposite with all validations', () => {
     makeSignUpValidation()
     const validations: Validation[] = []
     for (const field of ['name', 'email', 'password', 'passwordConfirmation']) {

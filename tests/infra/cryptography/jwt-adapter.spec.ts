@@ -1,5 +1,6 @@
 import { JwtAdapter } from '@/infra/cryptography'
 import { throwError } from '@/tests/domain/mocks'
+
 import jwt from 'jsonwebtoken'
 
 jest.mock('jsonwebtoken', () => ({
@@ -18,20 +19,20 @@ const makeSut = (): JwtAdapter => {
 
 describe('Jwt Adapter', () => {
   describe('sign()', () => {
-    test('1 - Should call sign with correct values', async () => {
+    test('Should call sign with correct values', async () => {
       const sut = makeSut()
       const signSpy = jest.spyOn(jwt, 'sign')
       await sut.encrypt('any_id')
       expect(signSpy).toHaveBeenCalledWith({ id: 'any_id' }, 'secret')
     })
 
-    test('2 - Should return a token on sign success', async () => {
+    test('Should return a token on sign success', async () => {
       const sut = makeSut()
       const accessToken = await sut.encrypt('any_id')
       expect(accessToken).toBe('any_token')
     })
 
-    test('3 - Should throw if sign throws', async () => {
+    test('Should throw if sign throws', async () => {
       const sut = makeSut()
       jest.spyOn(jwt, 'sign').mockImplementationOnce(throwError)
       const promise = sut.encrypt('any_id')
@@ -40,20 +41,20 @@ describe('Jwt Adapter', () => {
   })
 
   describe('verify()', () => {
-    test('1 - Should call verify with correct values', async () => {
+    test('Should call verify with correct values', async () => {
       const sut = makeSut()
       const verifySpy = jest.spyOn(jwt, 'verify')
       await sut.decrypt('any_token')
       expect(verifySpy).toHaveBeenCalledWith('any_token', 'secret')
     })
 
-    test('2 - Should return a value on verify success', async () => {
+    test('Should return a value on verify success', async () => {
       const sut = makeSut()
       const value = await sut.decrypt('any_token')
       expect(value).toBe('any_value')
     })
 
-    test('3 - Should throw if verify throws', async () => {
+    test('Should throw if verify throws', async () => {
       const sut = makeSut()
       jest.spyOn(jwt, 'verify').mockImplementationOnce(throwError)
       const promise = sut.decrypt('any_token')

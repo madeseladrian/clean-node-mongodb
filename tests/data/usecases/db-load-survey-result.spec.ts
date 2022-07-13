@@ -1,8 +1,9 @@
 import { DbLoadSurveyResult } from '@/data/usecases'
-import { throwError } from '@/tests/domain/mocks'
 import { LoadSurveyResultRepositorySpy, LoadSurveyByIdRepositorySpy } from '@/tests/data/mocks'
-import faker from 'faker'
+import { throwError } from '@/tests/domain/mocks'
+
 import MockDate from 'mockdate'
+import faker from 'faker'
 
 type SutTypes = {
   sut: DbLoadSurveyResult
@@ -38,28 +39,28 @@ describe('DbLoadSurveyResult UseCase', () => {
     accountId = faker.datatype.uuid()
   })
 
-  test('1 - Should call LoadSurveyResultRepository with correct values', async () => {
+  test('Should call LoadSurveyResultRepository with correct values', async () => {
     const { sut, loadSurveyResultRepositorySpy } = makeSut()
     await sut.load(surveyId, accountId)
     expect(loadSurveyResultRepositorySpy.surveyId).toBe(surveyId)
     expect(loadSurveyResultRepositorySpy.accountId).toBe(accountId)
   })
 
-  test('2 - Should throw if LoadSurveyResultRepository throws', async () => {
+  test('Should throw if LoadSurveyResultRepository throws', async () => {
     const { sut, loadSurveyResultRepositorySpy } = makeSut()
     jest.spyOn(loadSurveyResultRepositorySpy, 'loadBySurveyId').mockImplementationOnce(throwError)
     const promise = sut.load(surveyId, accountId)
     await expect(promise).rejects.toThrow()
   })
 
-  test('3 - Should call LoadSurveyByIdRepository if LoadSurveyResultRepository returns null', async () => {
+  test('Should call LoadSurveyByIdRepository if LoadSurveyResultRepository returns null', async () => {
     const { sut, loadSurveyResultRepositorySpy, loadSurveyByIdRepositorySpy } = makeSut()
     loadSurveyResultRepositorySpy.result = null
     await sut.load(surveyId, accountId)
     expect(loadSurveyByIdRepositorySpy.id).toBe(surveyId)
   })
 
-  test('4 - Should return surveyResultModel with all answers with count 0 if LoadSurveyResultRepository returns null', async () => {
+  test('Should return surveyResultModel with all answers with count 0 if LoadSurveyResultRepository returns null', async () => {
     const { sut, loadSurveyResultRepositorySpy, loadSurveyByIdRepositorySpy } = makeSut()
     loadSurveyResultRepositorySpy.result = null
     const surveyResult = await sut.load(surveyId, accountId)
@@ -77,7 +78,7 @@ describe('DbLoadSurveyResult UseCase', () => {
     })
   })
 
-  test('5 - Should return surveyResultModel on success', async () => {
+  test('Should return surveyResultModel on success', async () => {
     const { sut, loadSurveyResultRepositorySpy } = makeSut()
     const surveyResult = await sut.load(surveyId, accountId)
     expect(surveyResult).toEqual(loadSurveyResultRepositorySpy.result)

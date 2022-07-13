@@ -1,10 +1,10 @@
 import { SaveSurveyResult } from '@/domain/usecases'
-import { LoadSurveyResultRepository, SaveSurveyResultRepository } from '@/data/protocols'
+import { SaveSurveyResultRepository, LoadSurveyResultRepository } from '@/data/protocols'
 
 export class DbSaveSurveyResult implements SaveSurveyResult {
   constructor (
-    private readonly loadSurveyResultRepository: LoadSurveyResultRepository,
-    private readonly saveSurveyResultRepository: SaveSurveyResultRepository
+    private readonly saveSurveyResultRepository: SaveSurveyResultRepository,
+    private readonly loadSurveyResultRepository: LoadSurveyResultRepository
   ) {}
 
   async save (data: SaveSurveyResult.Params): Promise<SaveSurveyResult.Result> {

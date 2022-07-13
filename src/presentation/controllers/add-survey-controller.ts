@@ -1,12 +1,12 @@
-import { AddSurvey } from '@/domain/usecases'
-import { badRequest, noContent, serverError } from '@/presentation/helpers'
 import { Controller, HttpResponse, Validation } from '@/presentation/protocols'
+import { badRequest, serverError, noContent } from '@/presentation/helpers'
+import { AddSurvey } from '@/domain/usecases'
 
 export class AddSurveyController implements Controller {
   constructor (
-    private readonly addSurvey: AddSurvey,
-    private readonly validation: Validation
-  ) { }
+    private readonly validation: Validation,
+    private readonly addSurvey: AddSurvey
+  ) {}
 
   async handle (request: AddSurveyController.Request): Promise<HttpResponse> {
     try {

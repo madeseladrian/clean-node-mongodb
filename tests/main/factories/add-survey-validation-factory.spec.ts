@@ -1,11 +1,11 @@
-import { Validation } from '@/presentation/protocols'
-import { RequiredFieldValidation, ValidationComposite } from '@/validation/validators'
 import { makeAddSurveyValidation } from '@/main/factories'
+import { ValidationComposite, RequiredFieldValidation } from '@/validation/validators'
+import { Validation } from '@/presentation/protocols'
 
 jest.mock('@/validation/validators/validation-composite')
 
 describe('AddSurveyValidation Factory', () => {
-  test('1 - Should call ValidationComposite with all validations', () => {
+  test('Should call ValidationComposite with all validations', () => {
     makeAddSurveyValidation()
     const validations: Validation[] = []
     for (const field of ['question', 'answers']) {

@@ -1,11 +1,6 @@
-import { AddSurvey } from '@/domain/usecases'
-import {
-  AddSurveyRepository,
-  LoadSurveyByIdRepository,
-  LoadAnswersBySurveyRepository,
-  LoadSurveysRepository
-} from '@/data/protocols'
+import { AddSurveyRepository, LoadSurveyByIdRepository, LoadSurveysRepository, CheckSurveyByIdRepository, LoadAnswersBySurveyRepository } from '@/data/protocols'
 import { mockSurveyModel, mockSurveyModels } from '@/tests/domain/mocks'
+
 import faker from 'faker'
 
 export class AddSurveyRepositorySpy implements AddSurveyRepository {
@@ -39,6 +34,16 @@ export class LoadAnswersBySurveyRepositorySpy implements LoadAnswersBySurveyRepo
   }
 }
 
+export class CheckSurveyByIdRepositorySpy implements CheckSurveyByIdRepository {
+  id: string
+  result = true
+
+  async checkById (id: string): Promise<CheckSurveyByIdRepository.Result> {
+    this.id = id
+    return this.result
+  }
+}
+
 export class LoadSurveysRepositorySpy implements LoadSurveysRepository {
   accountId: string
   result = mockSurveyModels()
@@ -48,14 +53,3 @@ export class LoadSurveysRepositorySpy implements LoadSurveysRepository {
     return this.result
   }
 }
-
-export const mockAddSurveyParams = (): AddSurvey.Params => ({
-  question: faker.random.words(),
-  answers: [{
-    image: faker.image.imageUrl(),
-    answer: faker.random.word()
-  }, {
-    answer: faker.random.word()
-  }],
-  date: faker.date.recent()
-})

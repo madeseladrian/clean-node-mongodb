@@ -25,13 +25,13 @@ describe('DbLoadAnswersBySurvey', () => {
     surveyId = faker.datatype.uuid()
   })
 
-  test('1 - Should call LoadAnswersBySurveyRepository', async () => {
+  test('Should call LoadAnswersBySurveyRepository', async () => {
     const { sut, loadAnswersBySurveyRepositorySpy } = makeSut()
     await sut.loadAnswers(surveyId)
     expect(loadAnswersBySurveyRepositorySpy.id).toBe(surveyId)
   })
 
-  test('2 - Should return answers on success', async () => {
+  test('Should return answers on success', async () => {
     const { sut, loadAnswersBySurveyRepositorySpy } = makeSut()
     const answers = await sut.loadAnswers(surveyId)
     expect(answers).toEqual([
@@ -47,7 +47,7 @@ describe('DbLoadAnswersBySurvey', () => {
     expect(answers).toEqual([])
   })
 
-  test('3 - Should throw if LoadAnswersBySurveyRepository throws', async () => {
+  test('Should throw if LoadAnswersBySurveyRepository throws', async () => {
     const { sut, loadAnswersBySurveyRepositorySpy } = makeSut()
     jest.spyOn(loadAnswersBySurveyRepositorySpy, 'loadAnswers').mockImplementationOnce(throwError)
     const promise = sut.loadAnswers(surveyId)

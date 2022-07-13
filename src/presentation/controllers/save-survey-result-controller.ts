@@ -1,5 +1,5 @@
 import { Controller, HttpResponse } from '@/presentation/protocols'
-import { forbidden, ok, serverError } from '@/presentation/helpers'
+import { forbidden, serverError, ok } from '@/presentation/helpers'
 import { InvalidParamError } from '@/presentation/errors'
 import { LoadAnswersBySurvey, SaveSurveyResult } from '@/domain/usecases'
 

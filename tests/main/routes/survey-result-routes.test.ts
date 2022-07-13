@@ -1,6 +1,7 @@
+import env from '@/main/config/env'
 import { MongoHelper } from '@/infra/db'
 import { setupApp } from '@/main/config/app'
-import env from '@/main/config/env'
+
 import { sign } from 'jsonwebtoken'
 import { Collection } from 'mongodb'
 import { Express } from 'express'
@@ -46,7 +47,7 @@ describe('Survey Routes', () => {
   })
 
   describe('PUT /surveys/:surveyId/results', () => {
-    test('1 - Should return 403 on save survey result without accessToken', async () => {
+    test('Should return 403 on save survey result without accessToken', async () => {
       await request(app)
         .put('/api/surveys/any_id/results')
         .send({
@@ -55,7 +56,7 @@ describe('Survey Routes', () => {
         .expect(403)
     })
 
-    test('2 - Should return 200 on save survey result with accessToken', async () => {
+    test('Should return 200 on save survey result with accessToken', async () => {
       const accessToken = await mockAccessToken()
       const res = await surveyCollection.insertOne({
         question: 'Question',
@@ -73,6 +74,32 @@ describe('Survey Routes', () => {
         .send({
           answer: 'Answer 1'
         })
+        .expect(200)
+    })
+  })
+
+  describe('GET /surveys/:surveyId/results', () => {
+    test('Should return 403 on load survey result without accessToken', async () => {
+      await request(app)
+        .get('/api/surveys/any_id/results')
+        .expect(403)
+    })
+
+    test('Should return 200 on load survey result with accessToken', async () => {
+      const accessToken = await mockAccessToken()
+      const res = await surveyCollection.insertOne({
+        question: 'Question',
+        answers: [{
+          answer: 'Answer 1',
+          image: 'http://image-name.com'
+        }, {
+          answer: 'Answer 2'
+        }],
+        date: new Date()
+      })
+      await request(app)
+        .get(`/api/surveys/${res.insertedId.toHexString()}/results`)
+        .set('x-access-token', accessToken)
         .expect(200)
     })
   })

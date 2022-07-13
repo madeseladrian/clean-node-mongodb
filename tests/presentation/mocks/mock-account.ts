@@ -1,4 +1,5 @@
 import { AddAccount, Authentication, LoadAccountByToken } from '@/domain/usecases'
+
 import faker from 'faker'
 
 export class AddAccountSpy implements AddAccount {
