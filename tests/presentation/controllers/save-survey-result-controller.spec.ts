@@ -1,4 +1,6 @@
 import { SaveSurveyResultController } from '@/presentation/controllers'
+import { InvalidParamError } from '@/presentation/errors'
+import { forbidden } from '@/presentation/helpers'
 import { LoadAnswersBySurveySpy } from '@/tests/presentation/mocks'
 import faker from 'faker'
 import MockDate from 'mockdate'
@@ -37,5 +39,12 @@ describe('SaveSurveyResult Controller', () => {
     const request = mockRequest()
     await sut.handle(request)
     expect(loadAnswersBySurveySpy.id).toBe(request.surveyId)
+  })
+
+  test('2 - Should return 403 if LoadAnswersBySurvey returns null', async () => {
+    const { sut, loadAnswersBySurveySpy } = makeSut()
+    loadAnswersBySurveySpy.result = []
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(forbidden(new InvalidParamError('surveyId')))
   })
 })
