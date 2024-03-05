@@ -1,0 +1,5 @@
+coverage
+dist
+jest-integration-config.js
+jest-unit-config.js
+node_modules
