@@ -27,6 +27,10 @@ class CheckAccountByEmailRepositorySpy implements CheckAccountByEmailRepository 
   }
 }
 
+const throwError = (): never => {
+  throw new Error()
+}
+
 type SutTypes = {
   sut: DbAddAccount
   checkAccountByEmailRepositorySpy: CheckAccountByEmailRepositorySpy
@@ -65,5 +69,12 @@ describe('DbAddAccount Usecase', () => {
     checkAccountByEmailRepositorySpy.result = true
     const isValid = await sut.add(mockAddAccountParams())
     expect(isValid).toBe(false)
+  })
+
+  test('Should throw if CheckAccountByEmailRepository throws', async () => {
+    const { sut, checkAccountByEmailRepositorySpy } = makeSut()
+    jest.spyOn(checkAccountByEmailRepositorySpy, 'checkByEmail').mockImplementationOnce(throwError)
+    const promise = sut.add(mockAddAccountParams())
+    await expect(promise).rejects.toThrow()
   })
 })
