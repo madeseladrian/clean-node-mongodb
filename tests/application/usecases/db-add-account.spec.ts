@@ -32,14 +32,14 @@ type SutTypes = {
   checkAccountByEmailRepositorySpy: CheckAccountByEmailRepositorySpy
 }
 
-class DbAddAccount {
+class DbAddAccount implements AddAccount {
   constructor (
     private readonly checkAccountByEmailRepository: CheckAccountByEmailRepository
   ) { }
 
-  async add (params: AddAccount.Params): Promise<null> {
+  async add (params: AddAccount.Params): Promise<AddAccount.Result> {
     await this.checkAccountByEmailRepository.checkByEmail(params.email)
-    return null
+    return false
   }
 }
 
@@ -58,5 +58,12 @@ describe('DbAddAccount Usecase', () => {
     const addAccountParams = mockAddAccountParams()
     await sut.add(addAccountParams)
     expect(checkAccountByEmailRepositorySpy.email).toBe(addAccountParams.email)
+  })
+
+  test('Should return false if CheckAccountByEmailRepository returns true', async () => {
+    const { sut, checkAccountByEmailRepositorySpy } = makeSut()
+    checkAccountByEmailRepositorySpy.result = true
+    const isValid = await sut.add(mockAddAccountParams())
+    expect(isValid).toBe(false)
   })
 })
