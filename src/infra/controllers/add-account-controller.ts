@@ -1,8 +1,10 @@
-import { type Controller, type Validation } from "@/infra/contracts"
+import { type Controller, type Validation } from "@/application/contracts"
 import {
   ok,
   badRequest,
-  forbidden, serverError, type HttpResponse
+  forbidden,
+  serverError,
+  type HttpResponse
 } from "@/infra/helpers"
 import { EmailInUseError } from "@/infra/errors"
 

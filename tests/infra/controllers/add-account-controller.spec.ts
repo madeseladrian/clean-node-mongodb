@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker"
 
 import { AddAccountController } from "@/infra/controllers"
-import { EmailInUseError, MissingParamError } from "@/infra/errors"
+import { EmailInUseError, MissingParamError, ServerError } from "@/infra/errors"
 import { badRequest, forbidden, ok, serverError } from "@/infra/helpers"
 
 import {
@@ -72,5 +72,12 @@ describe('AddAccountController', () => {
     addAccountSpy.result = true
     const httpResponse = await sut.handle(mockAddAccountRequest())
     expect(httpResponse).toEqual(ok(addAccountSpy.result))
+  })
+
+  test('Should return 500 (ServerError) if AddAccount throws', async () => {
+    const { sut, addAccountSpy } = makeSut()
+    jest.spyOn(addAccountSpy, 'add').mockImplementationOnce(throwError)
+    const httpResponse = await sut.handle(mockAddAccountRequest())
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 })
