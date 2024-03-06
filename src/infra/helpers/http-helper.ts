@@ -1,4 +1,4 @@
-import { ServerError } from "@/infra/errors"
+import { ServerError } from "@/application/errors"
 import { type HttpResponse } from "@/infra/helpers"
 
 export const badRequest = (error: Error): HttpResponse => ({

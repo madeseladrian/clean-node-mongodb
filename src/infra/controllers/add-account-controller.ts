@@ -6,7 +6,7 @@ import {
   serverError,
   type HttpResponse
 } from "@/infra/helpers"
-import { EmailInUseError } from "@/infra/errors"
+import { EmailInUseError } from "@/application/errors"
 
 import { type AddAccount } from "@/domain/add-account"
 

@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker"
 
 import { AddAccountController } from "@/infra/controllers"
-import { EmailInUseError, MissingParamError, ServerError } from "@/infra/errors"
+import { EmailInUseError, MissingParamError, ServerError } from "@/application/errors"
 import { badRequest, forbidden, ok, serverError } from "@/infra/helpers"
 
 import {
