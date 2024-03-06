@@ -1,5 +1,7 @@
 import { faker } from "@faker-js/faker"
 
+import { throwError } from "@/tests/application/usecases/errors"
+
 const mockAddAccountRequest = (): AddAccountController.Request => ({
   name: faker.internet.userName(),
   email: faker.internet.email(),
@@ -28,11 +30,15 @@ class AddAccountController implements Controller<AddAccountController.Request> {
   constructor (private readonly validation: Validation) {}
 
   async handle (request: AddAccountController.Request): Promise<HttpResponse> {
-    const error = this.validation.validate(request)
-    if (error) {
-      return badRequest(error)
+    try {
+      const error = this.validation.validate(request)
+      if (error) {
+        return badRequest(error)
+      }
+      return null
+    } catch (error) {
+      return serverError(error)
     }
-    return null
   }
 }
 
@@ -57,9 +63,22 @@ class MissingParamError extends Error {
   }
 }
 
+class ServerError extends Error {
+  constructor (stack: string) {
+    super('Internal server error')
+    this.name = 'ServerError'
+    this.stack = stack
+  }
+}
+
 const badRequest = (error: Error): HttpResponse => ({
   statusCode: 400,
   body: error
+})
+
+const serverError = (error: Error): HttpResponse => ({
+  statusCode: 500,
+  body: new ServerError(error.stack)
 })
 
 type SutTypes = {
@@ -89,5 +108,12 @@ describe('AddAccountController', () => {
     validationSpy.error = new MissingParamError(faker.word.noun())
     const httpResponse = await sut.handle(mockAddAccountRequest())
     expect(httpResponse).toEqual(badRequest(validationSpy.error))
+  })
+
+  test('Should return 500 (ServerError) if Validation throws', async () => {
+    const { sut, validationSpy } = makeSut()
+    jest.spyOn(validationSpy, 'validate').mockImplementationOnce(throwError)
+    const httpResponse = await sut.handle(mockAddAccountRequest())
+    expect(httpResponse).toEqual(serverError(new Error()))
   })
 })
