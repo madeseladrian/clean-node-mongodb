@@ -1,6 +1,6 @@
 import { DbAddAccount } from '@/application/usecases/db-add-account'
 
-import { throwError } from '@/tests/application/usecases/errors'
+import { throwError } from '@/tests/application/errors'
 import {
   AddAccountRepositorySpy,
   CheckAccountByEmailRepositorySpy,
