@@ -52,4 +52,12 @@ describe('DbAddAccount Usecase', () => {
     await sut.add(addAccountParams)
     expect(hasherSpy.plaintext).toBe(addAccountParams.password)
   })
+
+  test('Should not call Hasher if CheckAccountByEmailRepository returns true', async () => {
+    const { sut, checkAccountByEmailRepositorySpy, hasherSpy } = makeSut()
+    checkAccountByEmailRepositorySpy.result = true
+    const addAccountParams = mockAddAccountParams()
+    await sut.add(addAccountParams)
+    expect(hasherSpy.plaintext).toBe(undefined)
+  })
 })
