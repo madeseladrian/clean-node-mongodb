@@ -4,19 +4,23 @@ import { throwError } from '@/tests/application/usecases/errors'
 import {
   CheckAccountByEmailRepositorySpy,
   mockAddAccountParams
-} from '@/tests/application/usecases/mocks'
+} from '@/tests/application/usecases/mocks/mock-db-account'
+import { HasherSpy } from '@/tests/application/usecases/mocks/mock-cryptography'
 
 type SutTypes = {
   sut: DbAddAccount
   checkAccountByEmailRepositorySpy: CheckAccountByEmailRepositorySpy
+  hasherSpy: HasherSpy
 }
 
 const makeSut = (): SutTypes => {
   const checkAccountByEmailRepositorySpy = new CheckAccountByEmailRepositorySpy()
-  const sut = new DbAddAccount(checkAccountByEmailRepositorySpy)
+  const hasherSpy = new HasherSpy()
+  const sut = new DbAddAccount(checkAccountByEmailRepositorySpy, hasherSpy)
   return {
     sut,
-    checkAccountByEmailRepositorySpy
+    checkAccountByEmailRepositorySpy,
+    hasherSpy
   }
 }
 
@@ -40,5 +44,12 @@ describe('DbAddAccount Usecase', () => {
     jest.spyOn(checkAccountByEmailRepositorySpy, 'checkByEmail').mockImplementationOnce(throwError)
     const promise = sut.add(mockAddAccountParams())
     await expect(promise).rejects.toThrow()
+  })
+
+  test('Should call Hasher with correct plaintext', async () => {
+    const { sut, hasherSpy } = makeSut()
+    const addAccountParams = mockAddAccountParams()
+    await sut.add(addAccountParams)
+    expect(hasherSpy.plaintext).toBe(addAccountParams.password)
   })
 })
