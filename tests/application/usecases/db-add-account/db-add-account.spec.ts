@@ -1,50 +1,14 @@
-import { type AddAccount } from '@/domain/add-account'
-import { faker } from '@faker-js/faker'
+import { DbAddAccount } from '@/application/usecases/db-add-account'
 
-const mockAddAccountParams = (): AddAccount.Params => ({
-  name: faker.internet.userName(),
-  email: faker.internet.email(),
-  password: faker.internet.password()
-})
-
-namespace CheckAccountByEmailRepository {
-  export type Params = string
-  export type Result = boolean
-}
-
-interface CheckAccountByEmailRepository {
-  checkByEmail: (email: CheckAccountByEmailRepository.Params)
-    => Promise<CheckAccountByEmailRepository.Result>
-}
-
-class CheckAccountByEmailRepositorySpy implements CheckAccountByEmailRepository {
-  email: CheckAccountByEmailRepository.Params
-  result: CheckAccountByEmailRepository.Result = false
-
-  async checkByEmail (email: CheckAccountByEmailRepository.Params): Promise<CheckAccountByEmailRepository.Result> {
-    this.email = email
-    return this.result
-  }
-}
-
-const throwError = (): never => {
-  throw new Error()
-}
+import { throwError } from '@/tests/application/usecases/errors'
+import {
+  CheckAccountByEmailRepositorySpy,
+  mockAddAccountParams
+} from '@/tests/application/usecases/mocks'
 
 type SutTypes = {
   sut: DbAddAccount
   checkAccountByEmailRepositorySpy: CheckAccountByEmailRepositorySpy
-}
-
-class DbAddAccount implements AddAccount {
-  constructor (
-    private readonly checkAccountByEmailRepository: CheckAccountByEmailRepository
-  ) { }
-
-  async add (params: AddAccount.Params): Promise<AddAccount.Result> {
-    await this.checkAccountByEmailRepository.checkByEmail(params.email)
-    return false
-  }
 }
 
 const makeSut = (): SutTypes => {
