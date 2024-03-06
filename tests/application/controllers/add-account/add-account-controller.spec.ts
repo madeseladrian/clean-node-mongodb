@@ -28,7 +28,10 @@ class AddAccountController implements Controller<AddAccountController.Request> {
   constructor (private readonly validation: Validation) {}
 
   async handle (request: AddAccountController.Request): Promise<HttpResponse> {
-    this.validation.validate(request)
+    const error = this.validation.validate(request)
+    if (error) {
+      return badRequest(error)
+    }
     return null
   }
 }
@@ -46,6 +49,18 @@ class ValidationSpy implements Validation {
     return this.error
   }
 }
+
+class MissingParamError extends Error {
+  constructor (paramName: string) {
+    super(`Missing param: ${paramName}`)
+    this.name = 'MissingParamError'
+  }
+}
+
+const badRequest = (error: Error): HttpResponse => ({
+  statusCode: 400,
+  body: error
+})
 
 type SutTypes = {
   sut: AddAccountController
@@ -67,5 +82,12 @@ describe('AddAccountController', () => {
     const request = mockAddAccountRequest()
     await sut.handle(request)
     expect(validationSpy.input).toEqual(request)
+  })
+
+  test('Should return 400 (BadRequest) if Validation returns an error', async () => {
+    const { sut, validationSpy } = makeSut()
+    validationSpy.error = new MissingParamError(faker.word.noun())
+    const httpResponse = await sut.handle(mockAddAccountRequest())
+    expect(httpResponse).toEqual(badRequest(validationSpy.error))
   })
 })
