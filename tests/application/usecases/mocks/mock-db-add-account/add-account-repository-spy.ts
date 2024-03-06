@@ -1,4 +1,4 @@
-import { type AddAccountRepository } from '@/application/contracts/db/account'
+import { type AddAccountRepository } from '@/application/contracts/db/add-account'
 
 export class AddAccountRepositorySpy implements AddAccountRepository {
   params: AddAccountRepository.Params

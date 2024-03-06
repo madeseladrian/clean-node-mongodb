@@ -5,7 +5,7 @@ import {
   AddAccountRepositorySpy,
   CheckAccountByEmailRepositorySpy,
   mockAddAccountParams
-} from '@/tests/application/usecases/mocks/mock-db-account'
+} from '@/tests/application/usecases/mocks/mock-db-add-account'
 import { HasherSpy } from '@/tests/application/usecases/mocks/mock-cryptography'
 
 type SutTypes = {
