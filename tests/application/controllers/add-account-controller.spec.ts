@@ -1,8 +1,8 @@
 import { faker } from "@faker-js/faker"
 
 import { AddAccountController } from "@/application/controllers"
-import { MissingParamError } from "@/application/errors"
-import { badRequest, serverError } from "@/application/helpers"
+import { EmailInUseError, MissingParamError } from "@/application/errors"
+import { badRequest, forbidden, serverError } from "@/application/helpers"
 
 import {
   AddAccountSpy,
@@ -59,5 +59,11 @@ describe('AddAccountController', () => {
       email: request.email,
       password: request.password
     })
+  })
+
+  test('Should return 403 (Forbidden) if Validation returns an error', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(mockAddAccountRequest())
+    expect(httpResponse).toEqual(forbidden(new EmailInUseError()))
   })
 })

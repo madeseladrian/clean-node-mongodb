@@ -1,5 +1,6 @@
 import { type Controller, type Validation } from "@/application/contracts/protocols"
-import { badRequest, serverError, type HttpResponse } from "@/application/helpers"
+import { badRequest, forbidden, serverError, type HttpResponse } from "@/application/helpers"
+import { EmailInUseError } from "@/application/errors"
 
 import { type AddAccount } from "@/domain/add-account"
 
@@ -25,11 +26,14 @@ export class AddAccountController implements Controller<AddAccountController.Req
         return badRequest(error)
       }
       const { name, email, password } = request
-      await this.addAccount.add({
+      const isValid = await this.addAccount.add({
         name,
         email,
         password
       })
+      if (!isValid) {
+        return forbidden(new EmailInUseError())
+      }
       return null
     } catch (error) {
       return serverError(error)
