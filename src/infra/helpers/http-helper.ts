@@ -1,5 +1,5 @@
-import { ServerError } from "@/application/errors"
-import { type HttpResponse } from "@/application/helpers"
+import { ServerError } from "@/infra/errors"
+import { type HttpResponse } from "@/infra/helpers"
 
 export const badRequest = (error: Error): HttpResponse => ({
   statusCode: 400,
@@ -14,4 +14,9 @@ export const forbidden = (error: Error): HttpResponse => ({
 export const serverError = (error: Error): HttpResponse => ({
   statusCode: 500,
   body: new ServerError(error.stack)
+})
+
+export const ok = (data: any): HttpResponse => ({
+  statusCode: 200,
+  body: data
 })

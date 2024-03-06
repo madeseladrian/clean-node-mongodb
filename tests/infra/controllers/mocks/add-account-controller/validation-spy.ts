@@ -1,4 +1,4 @@
-import { type Validation } from "@/application/contracts/protocols"
+import { type Validation } from "@/infra/contracts"
 
 export class ValidationSpy implements Validation {
   error: Error = null

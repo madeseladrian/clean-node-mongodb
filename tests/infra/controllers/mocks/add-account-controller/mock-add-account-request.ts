@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker"
 
-import { type AddAccountController } from "@/application/controllers"
+import { type AddAccountController } from "@/infra/controllers"
 
 export const mockAddAccountRequest = (): AddAccountController.Request => ({
   name: faker.internet.userName(),

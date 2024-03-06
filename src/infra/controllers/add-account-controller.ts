@@ -1,6 +1,10 @@
-import { type Controller, type Validation } from "@/application/contracts/protocols"
-import { badRequest, forbidden, serverError, type HttpResponse } from "@/application/helpers"
-import { EmailInUseError } from "@/application/errors"
+import { type Controller, type Validation } from "@/infra/contracts"
+import {
+  ok,
+  badRequest,
+  forbidden, serverError, type HttpResponse
+} from "@/infra/helpers"
+import { EmailInUseError } from "@/infra/errors"
 
 import { type AddAccount } from "@/domain/add-account"
 
@@ -34,7 +38,7 @@ export class AddAccountController implements Controller<AddAccountController.Req
       if (!isValid) {
         return forbidden(new EmailInUseError())
       }
-      return null
+      return ok(isValid)
     } catch (error) {
       return serverError(error)
     }
