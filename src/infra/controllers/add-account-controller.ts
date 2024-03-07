@@ -3,15 +3,14 @@ import {
   ok,
   badRequest,
   forbidden,
-  serverError,
-  type HttpResponse
+  serverError
 } from "@/infra/helpers"
 import { EmailInUseError } from "@/application/errors"
 
 import { type AddAccount } from "@/domain/add-account"
 
 export namespace AddAccountController {
-  export type Request = {
+  export type Params = {
     name: string
     email: string
     password: string
@@ -19,13 +18,13 @@ export namespace AddAccountController {
   }
 }
 
-export class AddAccountController implements Controller<AddAccountController.Request> {
+export class AddAccountController implements Controller<AddAccountController.Params> {
   constructor (
     private readonly addAccount: AddAccount,
     private readonly validation: Validation
   ) { }
 
-  async handle (request: AddAccountController.Request): Promise<HttpResponse> {
+  async handle (request: AddAccountController.Params): Promise<Controller.Result> {
     try {
       const error = this.validation.validate(request)
       if (error) {

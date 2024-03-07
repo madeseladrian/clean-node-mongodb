@@ -1,1 +1,2 @@
-export * from "../validation/validation"
+export * from "./email-validator"
+export * from "./validation"
