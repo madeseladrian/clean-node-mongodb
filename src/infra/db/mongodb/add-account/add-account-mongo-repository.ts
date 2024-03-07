@@ -1,4 +1,7 @@
-import { type CheckAccountByEmailRepository, type AddAccountRepository } from '@/application/contracts'
+import {
+  type CheckAccountByEmailRepository,
+  type AddAccountRepository
+} from '@/application/contracts'
 import { MongoHelper } from '@/infra/db/mongodb/helpers'
 
 export class AddAccountMongoRepository implements AddAccountRepository, CheckAccountByEmailRepository {
