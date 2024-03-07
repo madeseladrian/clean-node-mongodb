@@ -1,7 +1,9 @@
 import bcrypt from 'bcrypt'
+import { faker } from '@faker-js/faker'
 
 import { BcryptAdapter } from '@/infra/cryptography'
-import { faker } from '@faker-js/faker'
+
+import { throwError } from '@/tests/infra/errors'
 
 const hash = faker.string.uuid()
 
@@ -26,8 +28,15 @@ describe('BcryptAdapter', () => {
   })
 
   test('Should return a valid hash on hash success', async () => {
-      const sut = makeSut()
-      const hashedValue = await sut.hash('any_value')
-      expect(hashedValue).toBe(hash)
-    })
+    const sut = makeSut()
+    const hashedValue = await sut.hash('any_value')
+    expect(hashedValue).toBe(hash)
+  })
+
+  test('Should throw if hash throws', async () => {
+    const sut = makeSut()
+    jest.spyOn(bcrypt, 'hash').mockImplementationOnce(throwError)
+    const promise = sut.hash('any_value')
+    await expect(promise).rejects.toThrow()
+  })
 })
