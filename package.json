@@ -17,7 +17,8 @@
   "author": "Mades Almeida",
   "license": "ISC",
   "dependencies": {
-    "module-alias": "^2.2.3"
+    "module-alias": "^2.2.3",
+    "validator": "^13.11.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",

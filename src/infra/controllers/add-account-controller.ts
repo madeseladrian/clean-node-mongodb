@@ -4,7 +4,7 @@ import {
   badRequest,
   forbidden,
   serverError
-} from "@/infra/helpers"
+} from "@/infra/http"
 import { EmailInUseError } from "@/application/errors"
 
 import { type AddAccount } from "@/domain/add-account"
