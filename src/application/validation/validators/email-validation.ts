@@ -1,4 +1,5 @@
 import { type EmailValidator, type Validation } from "@/application/contracts"
+import { InvalidParamError } from "@/application/errors"
 
 export class EmailValidation implements Validation {
   constructor (
@@ -7,7 +8,9 @@ export class EmailValidation implements Validation {
   ) { }
 
   validate (input: Validation.Params): Validation.Result {
-    this.emailValidator.isValid(input[this.fieldName])
-    return new Error()
+    const isValid = this.emailValidator.isValid(input[this.fieldName])
+    if (!isValid) {
+      return new InvalidParamError(this.fieldName)
+    }
   }
 }
