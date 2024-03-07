@@ -17,11 +17,13 @@
   "author": "Mades Almeida",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "module-alias": "^2.2.3",
     "validator": "^13.11.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
+    "@types/bcrypt": "^5.0.2",
     "@types/jest": "^29.5.12",
     "@types/module-alias": "^2.0.4",
     "@types/node": "^20.11.24",
