@@ -4,7 +4,7 @@ import {
   type CheckAccountByEmailRepository
 } from '@/application/contracts/db/add-account'
 
-import { type AddAccount } from '@/domain/add-account'
+import { type AddAccount } from '@/domain/entities/add-account'
 
 export class DbAddAccount implements AddAccount {
   constructor (

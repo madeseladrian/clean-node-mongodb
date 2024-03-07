@@ -7,7 +7,7 @@ import {
 } from '@/infra/http'
 import { EmailInUseError } from '@/application/errors'
 
-import { type AddAccount } from '@/domain/add-account'
+import { type AddAccount } from '@/domain/entities/add-account'
 
 export namespace AddAccountController {
   export type Params = {
