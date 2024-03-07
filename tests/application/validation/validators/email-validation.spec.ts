@@ -4,6 +4,7 @@ import { InvalidParamError } from "@/application/errors"
 import { EmailValidation } from "@/application/validation/validators"
 
 import { EmailValidatorSpy } from "@/tests/application/validation/mocks"
+import { throwError } from "@/tests/infra/errors"
 
 const field = faker.word.noun()
 
@@ -35,5 +36,11 @@ describe('EmailValidation', () => {
     const email = faker.internet.email()
     const error = sut.validate({ [field]: email })
     expect(error).toEqual(new InvalidParamError(field))
+  })
+
+  test('Should throw if EmailValidator throws', () => {
+    const { sut, emailValidatorSpy } = makeSut()
+    jest.spyOn(emailValidatorSpy, 'isValid').mockImplementationOnce(throwError)
+    expect(() => sut.validate('any_value')).toThrow()
   })
 })
