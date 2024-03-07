@@ -1,5 +1,5 @@
-import { type Validation } from "@/application/contracts"
-import { InvalidParamError } from "@/application/errors"
+import { type Validation } from '@/application/contracts'
+import { InvalidParamError } from '@/application/errors'
 
 export class CompareFieldsValidation implements Validation {
   constructor (

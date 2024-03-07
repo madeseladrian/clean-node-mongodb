@@ -1,4 +1,4 @@
-import { type EmailValidator } from "@/application/contracts"
+import { type EmailValidator } from '@/application/contracts'
 
 import validator from 'validator'
 

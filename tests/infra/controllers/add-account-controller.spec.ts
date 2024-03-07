@@ -1,15 +1,15 @@
-import { faker } from "@faker-js/faker"
+import { faker } from '@faker-js/faker'
 
-import { AddAccountController } from "@/infra/controllers"
-import { EmailInUseError, MissingParamError, ServerError } from "@/application/errors"
-import { badRequest, forbidden, ok, serverError } from "@/infra/http"
+import { AddAccountController } from '@/infra/controllers'
+import { EmailInUseError, MissingParamError, ServerError } from '@/application/errors'
+import { badRequest, forbidden, ok, serverError } from '@/infra/http'
 
 import {
   AddAccountSpy,
   mockAddAccountRequest,
   ValidationSpy
-} from "@/tests/infra/controllers/mocks"
-import { throwError } from "@/tests/infra/errors"
+} from '@/tests/infra/controllers/mocks'
+import { throwError } from '@/tests/infra/errors'
 
 type SutTypes = {
   sut: AddAccountController

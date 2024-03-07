@@ -1,4 +1,4 @@
-import { type HttpResponse } from "@/application/helpers"
+import { type HttpResponse } from '@/application/helpers'
 
 export namespace Controller {
   export type Params = any

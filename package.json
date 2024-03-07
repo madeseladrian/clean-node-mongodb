@@ -19,13 +19,16 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "module-alias": "^2.2.3",
+    "mongo": "^0.1.0",
     "validator": "^13.11.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
+    "@shelf/jest-mongodb": "^4.2.0",
     "@types/bcrypt": "^5.0.2",
     "@types/jest": "^29.5.12",
     "@types/module-alias": "^2.0.4",
+    "@types/mongodb": "^4.0.7",
     "@types/node": "^20.11.24",
     "eslint": "^8.57.0",
     "eslint-config-standard-with-typescript": "^43.0.1",

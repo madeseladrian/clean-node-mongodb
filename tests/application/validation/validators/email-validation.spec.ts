@@ -1,10 +1,10 @@
-import { faker } from "@faker-js/faker"
+import { faker } from '@faker-js/faker'
 
-import { InvalidParamError } from "@/application/errors"
-import { EmailValidation } from "@/application/validation/validators"
+import { InvalidParamError } from '@/application/errors'
+import { EmailValidation } from '@/application/validation/validators'
 
-import { EmailValidatorSpy } from "@/tests/application/validation/mocks"
-import { throwError } from "@/tests/infra/errors"
+import { EmailValidatorSpy } from '@/tests/application/validation/mocks'
+import { throwError } from '@/tests/infra/errors'
 
 const field = faker.word.noun()
 

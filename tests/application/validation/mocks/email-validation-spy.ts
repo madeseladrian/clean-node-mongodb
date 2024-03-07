@@ -1,4 +1,4 @@
-import { type EmailValidator } from "@/application/contracts/validation"
+import { type EmailValidator } from '@/application/contracts/validation'
 
 export class EmailValidatorSpy implements EmailValidator {
   isEmailValid = false

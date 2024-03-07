@@ -1,13 +1,13 @@
-import { type Controller, type Validation } from "@/application/contracts"
+import { type Controller, type Validation } from '@/application/contracts'
 import {
   ok,
   badRequest,
   forbidden,
   serverError
-} from "@/infra/http"
-import { EmailInUseError } from "@/application/errors"
+} from '@/infra/http'
+import { EmailInUseError } from '@/application/errors'
 
-import { type AddAccount } from "@/domain/add-account"
+import { type AddAccount } from '@/domain/add-account'
 
 export namespace AddAccountController {
   export type Params = {

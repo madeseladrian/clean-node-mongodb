@@ -1,7 +1,7 @@
-import { faker } from "@faker-js/faker"
+import { faker } from '@faker-js/faker'
 
-import { MissingParamError } from "@/application/errors"
-import { RequiredFieldValidation } from "@/application/validation/validators"
+import { MissingParamError } from '@/application/errors'
+import { RequiredFieldValidation } from '@/application/validation/validators'
 
 const field = faker.word.noun()
 

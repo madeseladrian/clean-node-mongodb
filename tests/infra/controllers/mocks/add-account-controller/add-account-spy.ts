@@ -1,4 +1,4 @@
-import { type AddAccount } from "@/domain/add-account"
+import { type AddAccount } from '@/domain/add-account'
 
 export class AddAccountSpy implements AddAccount {
   params: AddAccount.Params

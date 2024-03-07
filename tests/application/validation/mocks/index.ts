@@ -1,2 +1,2 @@
-export * from "./email-validation-spy"
-export * from "./validation-spy"
+export * from './email-validation-spy'
+export * from './validation-spy'

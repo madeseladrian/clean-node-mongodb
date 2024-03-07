@@ -1,10 +1,10 @@
-import { type Hasher } from "@/application/contracts/cryptography"
+import { type Hasher } from '@/application/contracts/cryptography'
 import {
   type AddAccountRepository,
   type CheckAccountByEmailRepository
-} from "@/application/contracts/db/add-account"
+} from '@/application/contracts/db/add-account'
 
-import { type AddAccount } from "@/domain/add-account"
+import { type AddAccount } from '@/domain/add-account'
 
 export class DbAddAccount implements AddAccount {
   constructor (
