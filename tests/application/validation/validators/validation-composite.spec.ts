@@ -3,7 +3,7 @@ import { faker } from '@faker-js/faker'
 import { MissingParamError } from '@/application/errors'
 import { ValidationComposite } from '@/application/validation/validators'
 
-import { ValidationSpy } from '@/tests/infra/controllers/mocks'
+import { ValidationSpy } from '@/tests/application/validation/mocks'
 
 const field = faker.word.noun()
 

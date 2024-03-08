@@ -1,14 +1,14 @@
 import { faker } from '@faker-js/faker'
 
 import { SignUpController } from '@/infra/controllers'
-import { EmailInUseError, MissingParamError, ServerError } from '@/application/errors'
 import { badRequest, forbidden, ok, serverError } from '@/infra/http'
+import { EmailInUseError, MissingParamError, ServerError } from '@/application/errors'
 
+import { ValidationSpy } from '@/tests/application/validation/mocks'
 import {
   SignUpSpy,
-  mockSignUpRequest,
-  ValidationSpy
-} from '@/tests/infra/controllers/mocks'
+  mockSignUpRequest
+} from '@/tests/infra/controllers/signup/mocks'
 import { throwError } from '@/tests/infra/errors'
 
 type SutTypes = {

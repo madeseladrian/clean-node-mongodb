@@ -1,1 +1,1 @@
-export * from './db-signup-factory'
+export * from './signup-usecase-factory'

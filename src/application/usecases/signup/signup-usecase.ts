@@ -6,11 +6,11 @@ import {
 
 import { type SignUp } from '@/domain/entities/signup'
 
-export class DbSignUp implements SignUp {
+export class SignUpUsecase implements SignUp {
   constructor (
-    private readonly signUpRepository: SignUpRepository,
     private readonly checkAccountByEmailRepository: CheckAccountByEmailRepository,
-    private readonly hasher: Hasher
+    private readonly hasher: Hasher,
+    private readonly signUpRepository: SignUpRepository
   ) { }
 
   async add (params: SignUp.Params): Promise<SignUp.Result> {

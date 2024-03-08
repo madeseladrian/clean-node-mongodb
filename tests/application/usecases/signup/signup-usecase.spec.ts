@@ -1,15 +1,15 @@
-import { DbSignUp } from '@/application/usecases/signup'
+import { SignUpUsecase } from '@/application/usecases/signup'
 
 import { throwError } from '@/tests/application/errors'
 import {
   SignUpRepositorySpy,
   CheckAccountByEmailRepositorySpy,
+  HasherSpy,
   mockSignUpParams
-} from '@/tests/application/usecases/mocks/mock-signup'
-import { HasherSpy } from '@/tests/application/usecases/mocks/mock-cryptography'
+} from '@/tests/application/usecases/signup/mocks'
 
 type SutTypes = {
-  sut: DbSignUp
+  sut: SignUpUsecase
   signUpRepositorySpy: SignUpRepositorySpy
   checkAccountByEmailRepositorySpy: CheckAccountByEmailRepositorySpy
   hasherSpy: HasherSpy
@@ -19,10 +19,10 @@ const makeSut = (): SutTypes => {
   const signUpRepositorySpy = new SignUpRepositorySpy()
   const checkAccountByEmailRepositorySpy = new CheckAccountByEmailRepositorySpy()
   const hasherSpy = new HasherSpy()
-  const sut = new DbSignUp(
-    signUpRepositorySpy,
+  const sut = new SignUpUsecase(
     checkAccountByEmailRepositorySpy,
-    hasherSpy
+    hasherSpy,
+    signUpRepositorySpy
   )
   return {
     sut,
@@ -32,7 +32,7 @@ const makeSut = (): SutTypes => {
   }
 }
 
-describe('DbSignUp Usecase', () => {
+describe('SignUpUsecase', () => {
   test('Should call CheckAccountByEmailRepository with correct email', async () => {
     const { sut, checkAccountByEmailRepositorySpy } = makeSut()
     const signUpParams = mockSignUpParams()
