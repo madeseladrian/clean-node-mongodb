@@ -1,1 +1,1 @@
-export * from './add-account-controller-factory'
+export * from './signup-controller-factory'
