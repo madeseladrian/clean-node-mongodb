@@ -3,7 +3,7 @@ import { type HashComparer } from '@/application/contracts/cryptography'
 export class HashComparerSpy implements HashComparer {
   plaintext: string
   digest: string
-  isValid = true
+  isValid = false
 
   async compare (params: HashComparer.Params): Promise<HashComparer.Result> {
     this.plaintext = params.plaintext

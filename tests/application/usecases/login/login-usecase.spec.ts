@@ -63,4 +63,10 @@ describe('LoginUseCase', () => {
     const promise = sut.auth(mockLoginParams())
     await expect(promise).rejects.toThrow()
   })
+
+  test('Should return null if HashComparer returns false', async () => {
+    const { sut } = makeSut()
+    const model = await sut.auth(mockLoginParams())
+    expect(model).toBeNull()
+  })
 })
