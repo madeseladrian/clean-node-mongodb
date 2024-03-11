@@ -21,23 +21,24 @@ export class LoginUseCase implements Login {
     const account = await this.loadAccountByEmailRepository.loadByEmail({
       email: loginParams.email
     })
-    if (account) {
-      const isValid = await this.hashComparer.compare({
-        plaintext: loginParams.password,
-        digest: account.password
-      })
-      if (isValid) {
-        const accessToken = await this.encrypter.encrypt({ plaintext: account.id })
-        await this.updateAccessTokenRepository.updateAccessToken({
-          id: account.id,
-          token: accessToken
-        })
-        return {
-          accessToken,
-          name: account.name
-        }
-      }
+    if (!account) {
+      return null
     }
-    return null
+    const isValid = await this.hashComparer.compare({
+      plaintext: loginParams.password,
+      digest: account.password
+    })
+    if (!isValid) {
+      return null
+    }
+    const accessToken = await this.encrypter.encrypt({ plaintext: account.id })
+    await this.updateAccessTokenRepository.updateAccessToken({
+      id: account.id,
+      token: accessToken
+    })
+    return {
+      accessToken,
+      name: account.name
+    }
   }
 }
