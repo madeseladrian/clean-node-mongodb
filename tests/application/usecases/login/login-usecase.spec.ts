@@ -2,21 +2,27 @@ import { LoginUseCase } from '@/application/usecases/login'
 
 import { throwError } from '@/tests/application/errors/errors'
 import {
+  HashComparerSpy,
   LoadAccountByEmailRepositorySpy,
   mockLoginParams
 } from '@/tests/application/usecases/login/mocks'
 
 type SutTypes = {
   sut: LoginUseCase
+  hashComparerSpy: HashComparerSpy
   loadAccountByEmailRepositorySpy: LoadAccountByEmailRepositorySpy
-
 }
 
 const makeSut = (): SutTypes => {
+  const hashComparerSpy = new HashComparerSpy()
   const loadAccountByEmailRepositorySpy = new LoadAccountByEmailRepositorySpy()
-  const sut = new LoginUseCase(loadAccountByEmailRepositorySpy)
+  const sut = new LoginUseCase(
+    hashComparerSpy,
+    loadAccountByEmailRepositorySpy
+  )
   return {
     sut,
+    hashComparerSpy,
     loadAccountByEmailRepositorySpy
   }
 }
@@ -41,5 +47,13 @@ describe('LoginUseCase', () => {
     loadAccountByEmailRepositorySpy.result = null
     const model = await sut.auth(mockLoginParams())
     expect(model).toBeNull()
+  })
+
+  test('Should call HashComparer with correct values', async () => {
+    const { sut, hashComparerSpy, loadAccountByEmailRepositorySpy } = makeSut()
+    const loginParams = mockLoginParams()
+    await sut.auth(loginParams)
+    expect(hashComparerSpy.plaintext).toBe(loginParams.password)
+    expect(hashComparerSpy.digest).toBe(loadAccountByEmailRepositorySpy.result.password)
   })
 })

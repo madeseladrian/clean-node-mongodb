@@ -1,8 +1,11 @@
 export namespace Hasher {
-  export type Params = string
+  export type Params = {
+    plaintext: string
+  }
+
   export type Result = string
 }
 
 export interface Hasher {
-  hash: (plaintext: Hasher.Params) => Promise<Hasher.Result>
+  hash: (params: Hasher.Params) => Promise<Hasher.Result>
 }
