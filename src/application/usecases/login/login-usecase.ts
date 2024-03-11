@@ -32,6 +32,10 @@ export class LoginUseCase implements Login {
           id: account.id,
           token: accessToken
         })
+        return {
+          accessToken,
+          name: account.name
+        }
       }
     }
     return null

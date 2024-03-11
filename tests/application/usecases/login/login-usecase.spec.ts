@@ -115,4 +115,12 @@ describe('LoginUseCase', () => {
     const promise = sut.auth(mockLoginParams())
     await expect(promise).rejects.toThrow()
   })
+
+  test('Should return data on success', async () => {
+    const { sut, encrypterSpy, hashComparerSpy, loadAccountByEmailRepositorySpy } = makeSut()
+    hashComparerSpy.isValid = true
+    const { accessToken, name } = await sut.auth(mockLoginParams())
+    expect(accessToken).toBe(encrypterSpy.ciphertext)
+    expect(name).toBe(loadAccountByEmailRepositorySpy.result.name)
+  })
 })
