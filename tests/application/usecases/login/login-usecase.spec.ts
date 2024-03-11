@@ -107,4 +107,12 @@ describe('LoginUseCase', () => {
     expect(updateAccessTokenRepositorySpy.id).toBe(loadAccountByEmailRepositorySpy.result.id)
     expect(updateAccessTokenRepositorySpy.token).toBe(encrypterSpy.ciphertext)
   })
+
+  test('Should throw if UpdateAccessTokenRepository throws', async () => {
+    const { sut, hashComparerSpy, updateAccessTokenRepositorySpy } = makeSut()
+     hashComparerSpy.isValid = true
+    jest.spyOn(updateAccessTokenRepositorySpy, 'updateAccessToken').mockImplementationOnce(throwError)
+    const promise = sut.auth(mockLoginParams())
+    await expect(promise).rejects.toThrow()
+  })
 })
