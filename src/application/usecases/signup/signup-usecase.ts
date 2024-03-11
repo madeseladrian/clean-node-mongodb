@@ -6,7 +6,7 @@ import {
 
 import { type SignUp } from '@/domain/entities/signup'
 
-export class SignUpUsecase implements SignUp {
+export class SignUpUseCase implements SignUp {
   constructor (
     private readonly checkAccountByEmailRepository: CheckAccountByEmailRepository,
     private readonly hasher: Hasher,

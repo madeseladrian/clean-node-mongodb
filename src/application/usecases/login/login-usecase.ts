@@ -1,7 +1,7 @@
 import { type LoadAccountByEmailRepository } from '@/application/contracts/db/login'
 import { type Login } from '@/domain/entities/login'
 
-export class LoginUsecase {
+export class LoginUseCase {
   constructor (
     private readonly loadAccountByEmailRepository: LoadAccountByEmailRepository
   ) {}

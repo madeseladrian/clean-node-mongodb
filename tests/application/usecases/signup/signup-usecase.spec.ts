@@ -1,4 +1,4 @@
-import { SignUpUsecase } from '@/application/usecases/signup'
+import { SignUpUseCase } from '@/application/usecases/signup'
 
 import { throwError } from '@/tests/application/errors'
 import {
@@ -9,7 +9,7 @@ import {
 } from '@/tests/application/usecases/signup/mocks'
 
 type SutTypes = {
-  sut: SignUpUsecase
+  sut: SignUpUseCase
   signUpRepositorySpy: SignUpRepositorySpy
   checkAccountByEmailRepositorySpy: CheckAccountByEmailRepositorySpy
   hasherSpy: HasherSpy
@@ -19,7 +19,7 @@ const makeSut = (): SutTypes => {
   const signUpRepositorySpy = new SignUpRepositorySpy()
   const checkAccountByEmailRepositorySpy = new CheckAccountByEmailRepositorySpy()
   const hasherSpy = new HasherSpy()
-  const sut = new SignUpUsecase(
+  const sut = new SignUpUseCase(
     checkAccountByEmailRepositorySpy,
     hasherSpy,
     signUpRepositorySpy
@@ -32,7 +32,7 @@ const makeSut = (): SutTypes => {
   }
 }
 
-describe('SignUpUsecase', () => {
+describe('SignUpUseCase', () => {
   test('Should call CheckAccountByEmailRepository with correct email', async () => {
     const { sut, checkAccountByEmailRepositorySpy } = makeSut()
     const signUpParams = mockSignUpParams()
