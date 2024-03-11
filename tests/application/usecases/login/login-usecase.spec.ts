@@ -2,6 +2,7 @@ import { LoginUseCase } from '@/application/usecases/login'
 
 import { throwError } from '@/tests/application/errors/errors'
 import {
+  EncrypterSpy,
   HashComparerSpy,
   LoadAccountByEmailRepositorySpy,
   mockLoginParams
@@ -9,19 +10,23 @@ import {
 
 type SutTypes = {
   sut: LoginUseCase
+  encrypterSpy: EncrypterSpy
   hashComparerSpy: HashComparerSpy
   loadAccountByEmailRepositorySpy: LoadAccountByEmailRepositorySpy
 }
 
 const makeSut = (): SutTypes => {
+  const encrypterSpy = new EncrypterSpy()
   const hashComparerSpy = new HashComparerSpy()
   const loadAccountByEmailRepositorySpy = new LoadAccountByEmailRepositorySpy()
   const sut = new LoginUseCase(
+    encrypterSpy,
     hashComparerSpy,
     loadAccountByEmailRepositorySpy
   )
   return {
     sut,
+    encrypterSpy,
     hashComparerSpy,
     loadAccountByEmailRepositorySpy
   }
@@ -68,5 +73,11 @@ describe('LoginUseCase', () => {
     const { sut } = makeSut()
     const model = await sut.auth(mockLoginParams())
     expect(model).toBeNull()
+  })
+
+  test('Should call Encrypter with correct plaintext', async () => {
+    const { sut, encrypterSpy, loadAccountByEmailRepositorySpy } = makeSut()
+    await sut.auth(mockLoginParams())
+    expect(encrypterSpy.plaintext).toBe(loadAccountByEmailRepositorySpy.result.id)
   })
 })
