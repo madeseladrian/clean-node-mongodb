@@ -1,12 +1,14 @@
 import { faker } from '@faker-js/faker'
 
 import { LoginController } from '@/infra/controllers'
-import { badRequest, unauthorized } from '@/infra/http'
+import { badRequest, serverError, unauthorized } from '@/infra/http'
 
 import { MissingParamError } from '@/application/errors'
 
 import { LoginSpy, mockLoginRequest } from '@/tests/infra/controllers/login/mocks'
+
 import { ValidationSpy } from '@/tests/application/validation/mocks'
+import { throwError } from '@/tests/application/errors'
 
 type SutTypes = {
   sut: LoginController
@@ -38,6 +40,13 @@ describe('LoginController', () => {
     validationSpy.error = new MissingParamError(faker.word.noun())
     const httpResponse = await sut.handle(mockLoginRequest())
     expect(httpResponse).toEqual(badRequest(validationSpy.error))
+  })
+
+  test('Should return 500 (ServerError) if Validation throws', async () => {
+    const { sut, validationSpy } = makeSut()
+    jest.spyOn(validationSpy, 'validate').mockImplementationOnce(throwError)
+    const httpResponse = await sut.handle(mockLoginRequest())
+    expect(httpResponse).toEqual(serverError(new Error()))
   })
 
   test('Should call Login with correct values', async () => {

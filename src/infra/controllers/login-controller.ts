@@ -1,4 +1,4 @@
-import { badRequest, unauthorized } from '@/infra/http'
+import { badRequest, serverError, unauthorized } from '@/infra/http'
 
 import { type Controller } from '@/application/contracts/controller'
 import { type Validation } from '@/application/contracts/validation'
@@ -19,13 +19,17 @@ export class LoginController implements Controller {
   ) {}
 
   async handle (request: LoginController.Request): Promise<Controller.Response> {
-    const error = this.validation.validate(request)
-    if (error) {
-      return badRequest(error)
-    }
-    const authenticationModel = await this.login.auth(request)
-    if (!authenticationModel) {
-      return unauthorized()
+    try {
+      const error = this.validation.validate(request)
+      if (error) {
+        return badRequest(error)
+      }
+      const authenticationModel = await this.login.auth(request)
+      if (!authenticationModel) {
+        return unauthorized()
+      }
+    } catch (error) {
+      return serverError(error)
     }
   }
 }
