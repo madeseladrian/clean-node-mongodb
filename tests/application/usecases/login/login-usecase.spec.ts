@@ -35,4 +35,11 @@ describe('LoginUseCase', () => {
     const promise = sut.auth(mockLoginParams())
     await expect(promise).rejects.toThrow()
   })
+
+  test('Should return null if LoadAccountByEmailRepository returns null', async () => {
+    const { sut, loadAccountByEmailRepositorySpy } = makeSut()
+    loadAccountByEmailRepositorySpy.result = null
+    const model = await sut.auth(mockLoginParams())
+    expect(model).toBeNull()
+  })
 })
