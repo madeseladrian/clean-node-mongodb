@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker'
 import { type Collection } from 'mongodb'
 
 import { MongoHelper } from '@/infra/db/mongodb/helpers'
@@ -34,5 +35,11 @@ describe('LoadAccountByEmailRepositoryMongo', () => {
     expect(account.id).toBeTruthy()
     expect(account.name).toBe(signUpParams.name)
     expect(account.password).toBe(signUpParams.password)
+  })
+
+  test('Should return null if loadByEmail fails', async () => {
+    const sut = makeSut()
+    const account = await sut.loadByEmail({ email: faker.internet.email() })
+    expect(account).toBeFalsy()
   })
 })
