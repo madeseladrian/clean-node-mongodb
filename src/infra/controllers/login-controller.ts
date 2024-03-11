@@ -1,4 +1,4 @@
-import { badRequest, serverError, unauthorized } from '@/infra/http'
+import { badRequest, ok, serverError, unauthorized } from '@/infra/http'
 
 import { type Controller } from '@/application/contracts/controller'
 import { type Validation } from '@/application/contracts/validation'
@@ -28,6 +28,7 @@ export class LoginController implements Controller {
       if (!authenticationModel) {
         return unauthorized()
       }
+      return ok(authenticationModel)
     } catch (error) {
       return serverError(error)
     }

@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 
 import { LoginController } from '@/infra/controllers'
-import { badRequest, serverError, unauthorized } from '@/infra/http'
+import { badRequest, ok, serverError, unauthorized } from '@/infra/http'
 
 import { MissingParamError } from '@/application/errors'
 
@@ -71,5 +71,11 @@ describe('LoginController', () => {
     jest.spyOn(loginSpy, 'auth').mockImplementationOnce(throwError)
     const httpResponse = await sut.handle(mockLoginRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
+  })
+
+  test('Should return 200 if valid credentials are provided', async () => {
+    const { sut, loginSpy } = makeSut()
+    const httpResponse = await sut.handle(mockLoginRequest())
+    expect(httpResponse).toEqual(ok(loginSpy.result))
   })
 })
