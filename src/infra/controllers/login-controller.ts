@@ -3,6 +3,8 @@ import { badRequest } from '@/infra/http'
 import { type Controller } from '@/application/contracts/controller'
 import { type Validation } from '@/application/contracts/validation'
 
+import { type Login } from '@/domain/entities/login'
+
 export namespace LoginController {
   export type Request = {
     email: string
@@ -12,6 +14,7 @@ export namespace LoginController {
 
 export class LoginController implements Controller {
   constructor (
+    private readonly login: Login,
     private readonly validation: Validation
   ) {}
 
@@ -20,5 +23,6 @@ export class LoginController implements Controller {
     if (error) {
       return badRequest(error)
     }
+    await this.login.auth(request)
   }
 }
