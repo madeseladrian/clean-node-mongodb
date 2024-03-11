@@ -93,4 +93,18 @@ describe('LoginUseCase', () => {
     expect(encrypterSpy.plaintext).toBe(undefined)
     expect(model).toBeNull()
   })
+
+  test('Should call UpdateAccessTokenRepository with correct values', async () => {
+    const {
+      sut,
+      encrypterSpy,
+      hashComparerSpy,
+      loadAccountByEmailRepositorySpy,
+      updateAccessTokenRepositorySpy
+    } = makeSut()
+    hashComparerSpy.isValid = true
+    await sut.auth(mockLoginParams())
+    expect(updateAccessTokenRepositorySpy.id).toBe(loadAccountByEmailRepositorySpy.result.id)
+    expect(updateAccessTokenRepositorySpy.token).toBe(encrypterSpy.ciphertext)
+  })
 })
