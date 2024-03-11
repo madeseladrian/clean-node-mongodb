@@ -1,11 +1,11 @@
 import { type CheckAccountByEmailRepository } from '@/application/contracts/db/signup'
 
 export class CheckAccountByEmailRepositorySpy implements CheckAccountByEmailRepository {
-  email: CheckAccountByEmailRepository.Params
+  email: string
   result: CheckAccountByEmailRepository.Result = false
 
-  async checkByEmail (email: CheckAccountByEmailRepository.Params): Promise<CheckAccountByEmailRepository.Result> {
-    this.email = email
+  async checkByEmail (params: CheckAccountByEmailRepository.Params): Promise<CheckAccountByEmailRepository.Result> {
+    this.email = params.email
     return this.result
   }
 }

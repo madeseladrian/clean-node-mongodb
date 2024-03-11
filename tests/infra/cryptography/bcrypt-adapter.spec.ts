@@ -5,6 +5,7 @@ import { BcryptAdapter } from '@/infra/cryptography'
 
 import { throwError } from '@/tests/infra/errors'
 
+const plaintext = faker.lorem.word()
 const hash = faker.string.uuid()
 
 jest.mock('bcrypt', () => ({
@@ -23,20 +24,20 @@ describe('BcryptAdapter', () => {
   test('Should call hash with correct values', async () => {
     const sut = makeSut()
     const hashSpy = jest.spyOn(bcrypt, 'hash')
-    await sut.hash('any_value')
-    expect(hashSpy).toHaveBeenCalledWith('any_value', salt)
+    await sut.hash({ plaintext })
+    expect(hashSpy).toHaveBeenCalledWith(plaintext, salt)
   })
 
   test('Should return a valid hash on hash success', async () => {
     const sut = makeSut()
-    const hashedValue = await sut.hash('any_value')
+    const hashedValue = await sut.hash({ plaintext })
     expect(hashedValue).toBe(hash)
   })
 
   test('Should throw if hash throws', async () => {
     const sut = makeSut()
     jest.spyOn(bcrypt, 'hash').mockImplementationOnce(throwError)
-    const promise = sut.hash('any_value')
+    const promise = sut.hash({ plaintext })
     await expect(promise).rejects.toThrow()
   })
 })

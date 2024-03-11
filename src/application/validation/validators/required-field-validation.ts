@@ -4,8 +4,8 @@ import { MissingParamError } from '@/application/errors'
 export class RequiredFieldValidation implements Validation {
   constructor (private readonly fieldName: string) { }
 
-  validate (input: Validation.Params): Validation.Result {
-    if (!input[this.fieldName]) {
+  validate (params: Validation.Params): Validation.Result {
+    if (!params[this.fieldName]) {
       return new MissingParamError(this.fieldName)
     }
   }

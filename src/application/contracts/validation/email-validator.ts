@@ -1,8 +1,11 @@
 export namespace EmailValidator {
-  export type Params = string
+  export type Params = {
+    email: string
+  }
+
   export type Result = boolean
 }
 
 export interface EmailValidator {
-  isValid: (email: EmailValidator.Params) => EmailValidator.Result
+  isValid: (params: EmailValidator.Params) => EmailValidator.Result
 }

@@ -7,8 +7,8 @@ export class EmailValidation implements Validation {
     private readonly emailValidator: EmailValidator
   ) { }
 
-  validate (input: Validation.Params): Validation.Result {
-    const isValid = this.emailValidator.isValid(input[this.fieldName])
+  validate (params: Validation.Params): Validation.Result {
+    const isValid = this.emailValidator.isValid({ email: params[this.fieldName] })
     if (!isValid) {
       return new InvalidParamError(this.fieldName)
     }

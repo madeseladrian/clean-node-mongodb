@@ -7,7 +7,6 @@ import {
 
 import { type Controller, type Validation } from '@/application/contracts'
 import { EmailInUseError } from '@/application/errors'
-import { type HttpResponse } from '@/application/helpers'
 
 import { type SignUp } from '@/domain/entities/signup'
 
@@ -26,7 +25,7 @@ export class SignUpController implements Controller<SignUpController.Params> {
     private readonly validation: Validation
   ) { }
 
-  async handle (request: SignUpController.Params): Promise<HttpResponse> {
+  async handle (request: SignUpController.Params): Promise<Controller.Response> {
     try {
       const error = this.validation.validate(request)
       if (error) {

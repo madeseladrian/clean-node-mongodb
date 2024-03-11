@@ -4,5 +4,5 @@ export namespace Validation {
 }
 
 export interface Validation {
-  validate: (input: Validation.Params) => Validation.Result
+  validate: (params: Validation.Params) => Validation.Result
 }

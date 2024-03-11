@@ -11,5 +11,5 @@ export namespace Login {
 }
 
 export interface Login {
-  auth: (loginParams: Login.Params) => Promise<Login.Result>
+  auth: (params: Login.Params) => Promise<Login.Result>
 }

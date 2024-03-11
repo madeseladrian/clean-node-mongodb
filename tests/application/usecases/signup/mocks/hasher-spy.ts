@@ -1,11 +1,11 @@
 import { type Hasher } from '@/application/contracts/cryptography'
 
 export class HasherSpy implements Hasher {
-  plaintext: Hasher.Params
+  plaintext: string
   digest: Hasher.Result
 
-  async hash (plaintext: Hasher.Params): Promise<Hasher.Result> {
-    this.plaintext = plaintext
+  async hash (params: Hasher.Params): Promise<Hasher.Result> {
+    this.plaintext = params.plaintext
     return this.digest
   }
 }

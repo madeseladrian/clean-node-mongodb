@@ -5,6 +5,7 @@ import {
   EncrypterSpy,
   HashComparerSpy,
   LoadAccountByEmailRepositorySpy,
+  UpdateAccessTokenRepositorySpy,
   mockLoginParams
 } from '@/tests/application/usecases/login/mocks'
 
@@ -13,22 +14,26 @@ type SutTypes = {
   encrypterSpy: EncrypterSpy
   hashComparerSpy: HashComparerSpy
   loadAccountByEmailRepositorySpy: LoadAccountByEmailRepositorySpy
+  updateAccessTokenRepositorySpy: UpdateAccessTokenRepositorySpy
 }
 
 const makeSut = (): SutTypes => {
   const encrypterSpy = new EncrypterSpy()
   const hashComparerSpy = new HashComparerSpy()
   const loadAccountByEmailRepositorySpy = new LoadAccountByEmailRepositorySpy()
+  const updateAccessTokenRepositorySpy = new UpdateAccessTokenRepositorySpy()
   const sut = new LoginUseCase(
     encrypterSpy,
     hashComparerSpy,
-    loadAccountByEmailRepositorySpy
+    loadAccountByEmailRepositorySpy,
+    updateAccessTokenRepositorySpy
   )
   return {
     sut,
     encrypterSpy,
     hashComparerSpy,
-    loadAccountByEmailRepositorySpy
+    loadAccountByEmailRepositorySpy,
+    updateAccessTokenRepositorySpy
   }
 }
 

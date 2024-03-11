@@ -4,8 +4,8 @@ export class EmailValidatorSpy implements EmailValidator {
   isEmailValid = false
   email: string
 
-  isValid (email: EmailValidator.Params): EmailValidator.Result {
-    this.email = email
+  isValid (params: EmailValidator.Params): EmailValidator.Result {
+    this.email = params.email
     return this.isEmailValid
   }
 }
