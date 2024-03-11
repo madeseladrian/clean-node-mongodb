@@ -19,9 +19,11 @@ export class LoginUseCase implements Login {
         plaintext: loginParams.password,
         digest: account.password
       }
-      await this.hashComparer.compare(hashComparerParams)
-      const encrypterParams: Encrypter.Params = { plaintext: account.id }
-      await this.encrypter.encrypt(encrypterParams)
+      const isValid = await this.hashComparer.compare(hashComparerParams)
+      if (isValid) {
+        const encrypterParams: Encrypter.Params = { plaintext: account.id }
+        await this.encrypter.encrypt(encrypterParams)
+      }
     }
     return null
   }

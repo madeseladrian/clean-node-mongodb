@@ -76,8 +76,16 @@ describe('LoginUseCase', () => {
   })
 
   test('Should call Encrypter with correct plaintext', async () => {
-    const { sut, encrypterSpy, loadAccountByEmailRepositorySpy } = makeSut()
+    const { sut, encrypterSpy, hashComparerSpy, loadAccountByEmailRepositorySpy } = makeSut()
+    hashComparerSpy.isValid = true
     await sut.auth(mockLoginParams())
     expect(encrypterSpy.plaintext).toBe(loadAccountByEmailRepositorySpy.result.id)
+  })
+
+  test('Should not call Encrypter if HashComparer returns false ', async () => {
+    const { sut, encrypterSpy } = makeSut()
+    const model = await sut.auth(mockLoginParams())
+    expect(encrypterSpy.plaintext).toBe(undefined)
+    expect(model).toBeNull()
   })
 })
