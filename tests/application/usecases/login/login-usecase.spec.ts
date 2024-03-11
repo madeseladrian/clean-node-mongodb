@@ -56,4 +56,11 @@ describe('LoginUseCase', () => {
     expect(hashComparerSpy.plaintext).toBe(loginParams.password)
     expect(hashComparerSpy.digest).toBe(loadAccountByEmailRepositorySpy.result.password)
   })
+
+  test('Should throw if HashComparer throws', async () => {
+    const { sut, hashComparerSpy } = makeSut()
+    jest.spyOn(hashComparerSpy, 'compare').mockImplementationOnce(throwError)
+    const promise = sut.auth(mockLoginParams())
+    await expect(promise).rejects.toThrow()
+  })
 })
