@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 
 import { LoginController } from '@/infra/controllers'
-import { badRequest } from '@/infra/http'
+import { badRequest, unauthorized } from '@/infra/http'
 
 import { MissingParamError } from '@/application/errors'
 
@@ -48,5 +48,12 @@ describe('LoginController', () => {
       email: request.email,
       password: request.password
     })
+  })
+
+  test('Should return 401 if invalid credentials are provided', async () => {
+    const { sut, loginSpy } = makeSut()
+    loginSpy.result = null
+    const httpResponse = await sut.handle(mockLoginRequest())
+    expect(httpResponse).toEqual(unauthorized())
   })
 })

@@ -1,4 +1,4 @@
-import { badRequest } from '@/infra/http'
+import { badRequest, unauthorized } from '@/infra/http'
 
 import { type Controller } from '@/application/contracts/controller'
 import { type Validation } from '@/application/contracts/validation'
@@ -23,6 +23,9 @@ export class LoginController implements Controller {
     if (error) {
       return badRequest(error)
     }
-    await this.login.auth(request)
+    const authenticationModel = await this.login.auth(request)
+    if (!authenticationModel) {
+      return unauthorized()
+    }
   }
 }
