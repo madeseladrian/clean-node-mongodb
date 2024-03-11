@@ -1,6 +1,9 @@
 import { faker } from '@faker-js/faker'
 
 import { LoginController } from '@/infra/controllers'
+import { badRequest } from '@/infra/http'
+
+import { MissingParamError } from '@/application/errors'
 
 import { ValidationSpy } from '@/tests/application/validation/mocks'
 
@@ -29,5 +32,12 @@ describe('LoginController', () => {
     const request = mockRequest()
     await sut.handle(request)
     expect(validationSpy.input).toEqual(request)
+  })
+
+  test('Should return 400 if Validation returns an error', async () => {
+    const { sut, validationSpy } = makeSut()
+    validationSpy.error = new MissingParamError(faker.word.noun())
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(badRequest(validationSpy.error))
   })
 })

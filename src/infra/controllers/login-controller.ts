@@ -1,3 +1,5 @@
+import { badRequest } from '@/infra/http'
+
 import { type Controller } from '@/application/contracts/controller'
 import { type Validation } from '@/application/contracts/validation'
 
@@ -14,7 +16,9 @@ export class LoginController implements Controller {
   ) {}
 
   async handle (request: LoginController.Request): Promise<Controller.Response> {
-    this.validation.validate(request)
-    return null
+    const error = this.validation.validate(request)
+    if (error) {
+      return badRequest(error)
+    }
   }
 }
