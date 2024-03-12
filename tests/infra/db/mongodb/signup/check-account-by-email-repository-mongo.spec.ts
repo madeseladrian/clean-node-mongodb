@@ -30,13 +30,13 @@ describe('CheckAccountByEmailRepositoryMongo', () => {
     const sut = makeSut()
     const signUpParams = mockSignUpParams()
     await accountCollection.insertOne(signUpParams)
-    const exists = await sut.checkByEmail({ email: signUpParams.email })
+    const exists = await sut.checkByEmail(signUpParams.email)
     expect(exists).toBe(true)
   })
 
   test('Should return false if email is not valid', async () => {
     const sut = makeSut()
-    const exists = await sut.checkByEmail({ email: faker.internet.email() })
+    const exists = await sut.checkByEmail(faker.internet.email())
     expect(exists).toBe(false)
   })
 })

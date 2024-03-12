@@ -18,9 +18,7 @@ export class LoginUseCase implements Login {
   ) {}
 
   async auth (loginParams: Login.Params): Promise<Login.Result> {
-    const account = await this.loadAccountByEmailRepository.loadByEmail({
-      email: loginParams.email
-    })
+    const account = await this.loadAccountByEmailRepository.loadByEmail(loginParams.email)
     if (!account) {
       return null
     }
@@ -31,7 +29,7 @@ export class LoginUseCase implements Login {
     if (!isValid) {
       return null
     }
-    const accessToken = await this.encrypter.encrypt({ plaintext: account.id })
+    const accessToken = await this.encrypter.encrypt(account.id)
     await this.updateAccessTokenRepository.updateAccessToken({
       id: account.id,
       token: accessToken

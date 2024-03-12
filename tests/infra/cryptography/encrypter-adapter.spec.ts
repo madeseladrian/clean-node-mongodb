@@ -22,20 +22,20 @@ describe('EncrypterAdapter', () => {
   test('Should call sign with correct values', async () => {
     const sut = makeSut()
     const signSpy = jest.spyOn(jwt, 'sign')
-    await sut.encrypt({ plaintext: anyId })
+    await sut.encrypt(anyId)
     expect(signSpy).toHaveBeenCalledWith({ id: anyId }, 'secret')
   })
 
   test('Should return a token on sign success', async () => {
     const sut = makeSut()
-    const accessToken = await sut.encrypt({ plaintext: anyId })
+    const accessToken = await sut.encrypt(anyId)
     expect(accessToken).toBe(token)
   })
 
   test('Should throw if sign throws', async () => {
     const sut = makeSut()
     jest.spyOn(jwt, 'sign').mockImplementationOnce(throwError)
-    const promise = sut.encrypt({ plaintext: anyId })
+    const promise = sut.encrypt(anyId)
     await expect(promise).rejects.toThrow()
   })
 })

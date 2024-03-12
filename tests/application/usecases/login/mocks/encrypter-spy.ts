@@ -6,8 +6,8 @@ export class EncrypterSpy implements Encrypter {
   ciphertext = faker.string.uuid()
   plaintext: string
 
-  async encrypt (params: Encrypter.Params): Promise<Encrypter.Result> {
-    this.plaintext = params.plaintext
+  async encrypt (plaintext: Encrypter.Params): Promise<Encrypter.Result> {
+    this.plaintext = plaintext
     return this.ciphertext
   }
 }

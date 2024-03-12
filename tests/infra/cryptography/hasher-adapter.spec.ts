@@ -24,20 +24,20 @@ describe('HasherAdapter', () => {
   test('Should call hash with correct values', async () => {
     const sut = makeSut()
     const hashSpy = jest.spyOn(bcrypt, 'hash')
-    await sut.hash({ plaintext: anyValue })
+    await sut.hash(anyValue)
     expect(hashSpy).toHaveBeenCalledWith(anyValue, salt)
   })
 
   test('Should return a valid hash on hash success', async () => {
     const sut = makeSut()
-    const hashedValue = await sut.hash({ plaintext: anyValue })
+    const hashedValue = await sut.hash(anyValue)
     expect(hashedValue).toBe(hash)
   })
 
   test('Should throw if hash throws', async () => {
     const sut = makeSut()
     jest.spyOn(bcrypt, 'hash').mockImplementationOnce(throwError)
-    const promise = sut.hash({ plaintext: anyValue })
+    const promise = sut.hash(anyValue)
     await expect(promise).rejects.toThrow()
   })
 })

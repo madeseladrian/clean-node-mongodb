@@ -14,11 +14,11 @@ export class SignUpUseCase implements SignUp {
   ) { }
 
   async add (params: SignUp.Params): Promise<SignUp.Result> {
-    const existsEmail = await this.checkAccountByEmailRepository.checkByEmail({ email: params.email })
+    const existsEmail = await this.checkAccountByEmailRepository.checkByEmail(params.email)
     let isValid = false
 
     if (!existsEmail) {
-      const hashedPassword = await this.hasher.hash({ plaintext: params.password })
+      const hashedPassword = await this.hasher.hash(params.password)
       isValid = await this.signUpRepository.add({ ...params, password: hashedPassword })
     }
 

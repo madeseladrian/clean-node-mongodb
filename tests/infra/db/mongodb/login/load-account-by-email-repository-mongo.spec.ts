@@ -30,7 +30,7 @@ describe('LoadAccountByEmailRepositoryMongo', () => {
     const sut = makeSut()
     const signUpParams = mockSignUpParams()
     await accountCollection.insertOne(signUpParams)
-    const account = await sut.loadByEmail({ email: signUpParams.email })
+    const account = await sut.loadByEmail(signUpParams.email)
     expect(account).toBeTruthy()
     expect(account.id).toBeTruthy()
     expect(account.name).toBe(signUpParams.name)
@@ -39,7 +39,7 @@ describe('LoadAccountByEmailRepositoryMongo', () => {
 
   test('Should return null if loadByEmail fails', async () => {
     const sut = makeSut()
-    const account = await sut.loadByEmail({ email: faker.internet.email() })
+    const account = await sut.loadByEmail(faker.internet.email())
     expect(account).toBeFalsy()
   })
 })

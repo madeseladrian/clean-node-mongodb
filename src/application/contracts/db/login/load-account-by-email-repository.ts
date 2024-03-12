@@ -1,8 +1,5 @@
 export namespace LoadAccountByEmailRepository {
-  export type Params = {
-    email: string
-  }
-
+  export type Params = string
   export type Result = {
     id: string
     name: string
@@ -11,6 +8,6 @@ export namespace LoadAccountByEmailRepository {
 }
 
 export interface LoadAccountByEmailRepository {
-  loadByEmail: (params: LoadAccountByEmailRepository.Params)
+  loadByEmail: (email: LoadAccountByEmailRepository.Params)
     => Promise<LoadAccountByEmailRepository.Result>
 }

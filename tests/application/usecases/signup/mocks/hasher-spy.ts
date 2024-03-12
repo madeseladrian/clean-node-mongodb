@@ -4,8 +4,8 @@ export class HasherSpy implements Hasher {
   plaintext: string
   digest: Hasher.Result
 
-  async hash (params: Hasher.Params): Promise<Hasher.Result> {
-    this.plaintext = params.plaintext
+  async hash (plaintext: Hasher.Params): Promise<Hasher.Result> {
+    this.plaintext = plaintext
     return this.digest
   }
 }

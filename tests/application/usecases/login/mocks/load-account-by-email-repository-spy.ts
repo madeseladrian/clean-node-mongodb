@@ -10,8 +10,8 @@ export class LoadAccountByEmailRepositorySpy implements LoadAccountByEmailReposi
     password: faker.internet.password()
   }
 
-  async loadByEmail (loadAccountByEmailRepositoryParams: LoadAccountByEmailRepository.Params): Promise<LoadAccountByEmailRepository.Result> {
-    this.email = loadAccountByEmailRepositoryParams.email
+  async loadByEmail (email: LoadAccountByEmailRepository.Params): Promise<LoadAccountByEmailRepository.Result> {
+    this.email = email
     return this.result
   }
 }

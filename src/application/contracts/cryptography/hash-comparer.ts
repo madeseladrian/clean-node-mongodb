@@ -3,7 +3,6 @@ export namespace HashComparer {
     plaintext: string
     digest: string
   }
-
   export type Result = boolean
 }
 
