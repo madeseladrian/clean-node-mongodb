@@ -1,4 +1,4 @@
-import { BcryptAdapter } from '@/infra/cryptography'
+import { HasherAdapter } from '@/infra/cryptography'
 import {
   SignUpRepositoryMongo,
   CheckAccountByEmailRepositoryMongo
@@ -10,12 +10,12 @@ import { type SignUp } from '@/domain/entities/signup'
 
 export const signUpUseCaseFactory = (): SignUp => {
   const salt = 12
-  const bcryptAdapter = new BcryptAdapter(salt)
+  const hasherAdapter = new HasherAdapter(salt)
   const checkAccountByEmailRepositoryMongo = new CheckAccountByEmailRepositoryMongo()
   const signUpRepositoryMongo = new SignUpRepositoryMongo()
   return new SignUpUseCase(
     checkAccountByEmailRepositoryMongo,
-    bcryptAdapter,
+    hasherAdapter,
     signUpRepositoryMongo
   )
 }

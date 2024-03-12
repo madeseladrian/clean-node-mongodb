@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 import jwt from 'jsonwebtoken'
 
-import { JwtAdapter } from '@/infra/cryptography'
+import { EncrypterAdapter } from '@/infra/cryptography'
 
 import { throwError } from '@/tests/application/errors'
 
@@ -14,11 +14,11 @@ jest.mock('jsonwebtoken', () => ({
   }
 }))
 
-const makeSut = (): JwtAdapter => {
-  return new JwtAdapter('secret')
+const makeSut = (): EncrypterAdapter => {
+  return new EncrypterAdapter('secret')
 }
 
-describe('JwtAdapter', () => {
+describe('EncrypterAdapter', () => {
   test('Should call sign with correct values', async () => {
     const sut = makeSut()
     const signSpy = jest.spyOn(jwt, 'sign')

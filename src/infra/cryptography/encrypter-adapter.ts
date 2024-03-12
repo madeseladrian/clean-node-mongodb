@@ -2,7 +2,7 @@ import { type Encrypter } from '@/application/contracts/cryptography'
 
 import jwt from 'jsonwebtoken'
 
-export class JwtAdapter implements Encrypter {
+export class EncrypterAdapter implements Encrypter {
   constructor (private readonly secret: string) { }
 
   async encrypt (params: Encrypter.Params): Promise<Encrypter.Result> {
